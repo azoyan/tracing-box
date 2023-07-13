@@ -83,6 +83,7 @@
             zoomist = new Zoomist('#zoomist', {
                 maxRatio: 10,
                 src: imgElement,
+                fill: 'contain',
             })
         });
     });
@@ -127,14 +128,20 @@
         button.classList.add("btn", "btn-secondary", "btn-sm", "d-flex", "align-items-center")
         console.log("isNotFullScreen", !document.fullscreenElement)
         button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
+        document.addEventListener("fullscreenchange", (event) => {
+            if (document.fullscreenElement == null) {
+                console.log("exit fullscreen")
+                button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
+            }
+            else {
+                button.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
+            }
+        });
         button.onclick = function () {
             if (document.fullscreenElement == null) {
                 openFullscreen()
-                this.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
             } else {
                 closeFullscreen()
-                this.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
-                // document.fullscreenElement = null
             }
         }
 
