@@ -57,33 +57,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     document.querySelector("img").style.transform += currentRotation
                 },
                 zoom() {
-                    document.querySelector("img").style.transform += currentRotation;
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
                     console.log("zoom", currentRotation, transform)
-                    document.querySelector("img").style.transform  = transform
-                    document.querySelector("img").style.transform += currentRotation;
+                    document.querySelector("img").style.transform = transform
 
                 },
                 wheel() {
-                    document.querySelector("img").style.transform += currentRotation;
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
-                    console.log("wheel", currentRotation,transform)
-                    document.querySelector("img").style.transform  = transform
-                    document.querySelector("img").style.transform += currentRotation;
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
+                    console.log("wheel", currentRotation, transform)
+                    document.querySelector("img").style.transform = transform
                 },
                 drag() {
-                    document.querySelector("img").style.transform += currentRotation;
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
                     console.log("drag", currentRotation, transform)
-                    document.querySelector("img").style.transform  = transform
-                    document.querySelector("img").style.transform += currentRotation;
+                    document.querySelector("img").style.transform = transform
                 },
                 pinch() {
-                    document.querySelector("img").style.transform += currentRotation;
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
                     console.log("pinch", currentRotation, transform)
-                    document.querySelector("img").style.transform  = transform
-                    document.querySelector("img").style.transform += currentRotation;
+                    document.querySelector("img").style.transform = transform
                 },
             }
         })
@@ -95,7 +87,7 @@ function lockImage() {
     zoomist.options.pinchable = false
     zoomist.options.wheelable = false
     while (navigator.firstChild) { navigator.firstChild.remove() }
-    navigator.appendChild(createButtonPanel([createRange(), createRotateButton(), createFullscreenButton()]))
+    navigator.appendChild(createButtonPanel([createRange(), createFullscreenButton()]))
 
     document.addEventListener('click', function enableNoSleep() {
         document.removeEventListener('click', enableNoSleep, false);
@@ -181,60 +173,20 @@ function createLabel(text) {
     return label
 }
 function createRange() {
-    //`<input type="range" class="form-range" id="lockRange" min="0" max="100" value="0" onchange="toggleScrollAndScale()">`;
-    let row = document.createElement('div')
-    row.classList.add('row')
-
-    let col0 = document.createElement("div")
-    col0.classList.add('col', 'col-sm')
-
-    let lock = document.createElement("button")
-    lock.classList.add("btn", "btn-sm", "btn-warning")
-    lock.innerHTML = `<i class="bi bi-lock"></i>`
-    lock.disabled = true
-    col0.appendChild(lock)
-    row.appendChild(col0)
-
-    let col1 = document.createElement('div')
-    col1.classList.add('col', 'col-auto')
-
-    let range = document.createElement('input')
-    range.type = 'range'
-    range.classList.add('form-range', 'custom-range')
-    range.id = 'lockRange'
-    range.min = '0'
-    range.max = '100'
-    range.value = '0'
-    range.step = '1'
-    range.onchange = unlockImage
-
-
-
-    col1.appendChild(range)
-    row.appendChild(col1)
-
-    let col2 = document.createElement('div')
-    col2.classList.add('col', 'col-sm')
-
-    let button = document.createElement("button")
-    button.classList.add("btn", "btn-sm", "btn-success")
-    button.innerHTML = `<i class="bi bi-unlock"></i>`
-    button.disabled = true
-
-    col2.appendChild(button)
-    row.appendChild(col2)
-
-    return row
+    let button = document.createElement('button');
+    button.classList.add("btn", "btn-outline-success", "btn-sm", "d-flex", "align-items-center")
+    button.onclick = unlockImage
+    button.innerHTML += `<i class="bi bi-unlock"></i>`
+    button.innerHTML += `<span class="d-none d-sm-inline">Unlock</span>`
+    return button
 }
 
 function unlockImage() {
-    let range = document.getElementById('lockRange');
-    if (range.value == range.max) {
-        while (navigator.firstChild) { navigator.firstChild.remove() }
-        navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
-        zoomist.options.draggable = true
-        zoomist.options.pinchable = true
-        zoomist.options.wheelable = true
-        noSleep.disable()
-    }
+    while (navigator.firstChild) { navigator.firstChild.remove() }
+    navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
+    zoomist.options.draggable = true
+    zoomist.options.pinchable = true
+    zoomist.options.wheelable = true
+    noSleep.disable()
+
 }
