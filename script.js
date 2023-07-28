@@ -7,22 +7,34 @@ let currentRotation = `rotate(0deg)`;
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
+
 function openFullscreen() {
-    if (html.requestFullscreen) {
-        html.requestFullscreen();
-    } else if (html.webkitRequestFullscreen) { /* Safari */
-        html.webkitRequestFullscreen();
-    } else if (html.msRequestFullscreen) { /* IE11 */
-        html.msRequestFullscreen();
+    // Trigger fullscreen  
+    if (html.requestFullscreen.requestFullscreen) {
+        html.requestFullscreen.requestFullscreen();
+    } else if (html.requestFullscreen.mozRequestFullScreen) { /* Firefox */
+        html.requestFullscreen.mozRequestFullScreen();
+    } else if (html.requestFullscreen.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        html.requestFullscreen.webkitRequestFullscreen();
+    } else if (html.requestFullscreen.webkitRequestFullScreen) { /* Chrome, Safari and Opera */
+        html.requestFullscreen.webkitRequestFullScreen();
+    }
+    else if (html.requestFullscreen.msRequestFullscreen) { /* IE/Edge */
+        html.requestFullscreen.msRequestFullscreen();
     }
 }
 
 function closeFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { /* Safari */
+    } else if (document.mozCancelFullScreen) { /* Firefox */
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
         document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE11 */
+    } else if (document.webkitExitFullScreen) { /* Chrome, Safari and Opera */
+        document.webkitExitFullScreen();
+    }
+    else if (document.msExitFullscreen) { /* IE/Edge */
         document.msExitFullscreen();
     }
 }
