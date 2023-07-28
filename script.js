@@ -3,7 +3,9 @@ let zoomist;
 let noSleep = new NoSleep();
 let html = document.documentElement;
 let imgElement;
-let currentRotation;
+let currentRotation = `rotate(0deg)`;
+
+const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
 function openFullscreen() {
     if (html.requestFullscreen) {
@@ -41,6 +43,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
 
         document.getElementById("uploadForm").remove();
+
         // let el = document.getElementById("#zoomist");
         zoomist = new Zoomist('#zoomist', {
             maxRatio: 10,
@@ -49,21 +52,38 @@ window.addEventListener('DOMContentLoaded', (event) => {
             maxRatio: 8,
             wheelable: true,
             on: {
+                ready() {
+                    console.log("ready")
+                    document.querySelector("img").style.transform += currentRotation
+                },
                 zoom() {
-                    console.log("zoom")
-                    document.querySelector("img").style.transform = currentRotation;
+                    document.querySelector("img").style.transform += currentRotation;
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    console.log("zoom", currentRotation, transform)
+                    document.querySelector("img").style.transform  = transform
+                    document.querySelector("img").style.transform += currentRotation;
+
                 },
                 wheel() {
-                    console.log("wheel")
-                    document.querySelector("img").style.transform = currentRotation;
+                    document.querySelector("img").style.transform += currentRotation;
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    console.log("wheel", currentRotation,transform)
+                    document.querySelector("img").style.transform  = transform
+                    document.querySelector("img").style.transform += currentRotation;
                 },
                 drag() {
-                    console.log("drag")
-                    document.querySelector("img").style.transform = currentRotation;
+                    document.querySelector("img").style.transform += currentRotation;
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    console.log("drag", currentRotation, transform)
+                    document.querySelector("img").style.transform  = transform
+                    document.querySelector("img").style.transform += currentRotation;
                 },
                 pinch() {
-                    console.log("pinch")
-                    document.querySelector("img").style.transform = currentRotation;
+                    document.querySelector("img").style.transform += currentRotation;
+                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "");
+                    console.log("pinch", currentRotation, transform)
+                    document.querySelector("img").style.transform  = transform
+                    document.querySelector("img").style.transform += currentRotation;
                 },
             }
         })
@@ -111,17 +131,18 @@ function createRotateButton() {
     button.classList.add("btn", "btn-outline-primary", "btn-sm", "d-flex", "align-items-center")
     button.type = "button"
     button.onclick = function () {
-        rotation -= 90; 
+        rotation -= 90;
         if (rotation === -360) {
             // 360 means rotate back to 0
             rotation = 0;
         }
         currentRotation = `rotate(${rotation}deg)`
         document.querySelector("img").style.transform = currentRotation;
+        // document.querySelector("img").style.transform.replace(ROTATION_REGEX, currentRotation)
     }
 
     // button.innerHTML += `<i class="bi bi-arrow-90deg-left"></i>Rotate 90°`
-    button.innerText +=`90°`
+    button.innerText += `90°`
     return button
 }
 
@@ -134,7 +155,7 @@ function createFullscreenButton() {
         if (document.fullscreenElement == null) {
             console.log("exit fullscreen")
             button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
-        }   
+        }
         else {
             console.log("enter fullscreen")
             button.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
