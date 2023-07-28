@@ -52,7 +52,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 zoom() {
                     console.log("zoom")
                     document.querySelector("img").style.transform = currentRotation;
-                }
+                },
+                wheel() {
+                    console.log("wheel")
+                    document.querySelector("img").style.transform = currentRotation;
+                },
+                drag() {
+                    console.log("drag")
+                    document.querySelector("img").style.transform = currentRotation;
+                },
+                pinch() {
+                    console.log("pinch")
+                    document.querySelector("img").style.transform = currentRotation;
+                },
             }
         })
     });
@@ -122,7 +134,7 @@ function createFullscreenButton() {
         if (document.fullscreenElement == null) {
             console.log("exit fullscreen")
             button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
-        }
+        }   
         else {
             console.log("enter fullscreen")
             button.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
@@ -170,7 +182,7 @@ function createRange() {
     range.classList.add('form-range', 'custom-range')
     range.id = 'lockRange'
     range.min = '0'
-    range.max = '3'
+    range.max = '100'
     range.value = '0'
     range.step = '1'
     range.onchange = unlockImage
