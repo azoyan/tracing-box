@@ -11,7 +11,7 @@ const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 function openFullscreen() {
     // Trigger fullscreen  
     if (html.requestFullscreen) {
-        html.requestFullscreen.requestFullscreen();
+        html.requestFullscreen();
     } else if (html.requestFullscreen.mozRequestFullScreen) { /* Firefox */
         html.requestFullscreen.mozRequestFullScreen();
     } else if (html.requestFullscreen.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
