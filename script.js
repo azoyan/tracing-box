@@ -10,7 +10,7 @@ const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
 function openFullscreen() {
     // Trigger fullscreen  
-    if (html.requestFullscreen.requestFullscreen) {
+    if (html.requestFullscreen) {
         html.requestFullscreen.requestFullscreen();
     } else if (html.requestFullscreen.mozRequestFullScreen) { /* Firefox */
         html.requestFullscreen.mozRequestFullScreen();
