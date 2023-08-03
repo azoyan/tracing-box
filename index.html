@@ -3,11 +3,11 @@
 
 <head>
     <title>Papper Tracing</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/tracing-paper/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/tracing-paper/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/tracing-paper/favicon-16x16.png">
-    <link rel="manifest" href="/tracing-paper/site.webmanifest">
-    <link rel="mask-icon" href="/tracing-paper/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="/tracing-papper/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/tracing-papper/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/tracing-papper/favicon-16x16.png">
+    <link rel="manifest" href="/tracing-papper/site.webmanifest">
+    <link rel="mask-icon" href="/tracing-papper/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -18,16 +18,28 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cotton123236/zoomist@latest/dist/zoomist.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/cotton123236/zoomist@latest/dist/zoomist.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
 </head>
 
 <body>
-    <nav class="navbar border-bottom border-bottom-dark">
-        <div class="container-fluid justify-content-center" id="nav">
-            <h4>Papper Tracing</h4>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid" id="nav">
+            <a class="navbar-brand mx-auto" href="#">Tracing Papper</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn bi bi-github" target="_blank" rel="noopener noreferrer"
+                            href="https://github.com/azoyan/tracing-papper/" role="button">
+                            GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container p-5 text-center justify-content-center" id="uploadForm">
@@ -36,6 +48,7 @@
     </div>
     <div id="zoomist"></div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
 <script src='script.js'></script>
 
 </html>
