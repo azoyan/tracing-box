@@ -58,7 +58,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         // let el = document.getElementById("#zoomist");
         zoomist = new Zoomist('#zoomist', {
-            maxRatio: 10,
+            maxRatio: 15,
             src: imgElement,
             fill: 'contain',
             maxRatio: 8,
@@ -67,32 +67,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 ready() {
                     console.log("ready")
                     document.querySelector("img").style.transform += currentRotation
+                    let wrapper = document.getElementsByClassName("zoomist-wrapper")[0]
+                    wrapper.style.height = "100dvh";
                 },
                 zoom() {
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
-                    console.log("zoom", currentRotation, transform)
-                    document.querySelector("img").style.transform = transform
-
+                    transformImage("zoom")
                 },
                 wheel() {
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
-                    console.log("wheel", currentRotation, transform)
-                    document.querySelector("img").style.transform = transform
+                    transformImage("wheel")
                 },
                 drag() {
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
-                    console.log("drag", currentRotation, transform)
-                    document.querySelector("img").style.transform = transform
+                    transformImage("drag")
                 },
                 pinch() {
-                    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
-                    console.log("pinch", currentRotation, transform)
-                    document.querySelector("img").style.transform = transform
+                    transformImage("pinch")
                 },
             }
         })
     });
 });
+
+function transformImage(debugText) {
+    let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
+    console.log("zoom", currentRotation, transform)
+    document.querySelector("img").style.transform = transform
+    let wrapper = document.getElementsByClassName("zoomist-wrapper")[0]
+    wrapper.style.height = "100dvh";
+}
 
 function lockImage() {
     zoomist.options.draggable = false
