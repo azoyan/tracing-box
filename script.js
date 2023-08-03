@@ -50,7 +50,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         imgElement = document.createElement('img');
         imgElement.src = imageUrl;
-
+        
+        navigator.classList.add("justify-content-center")
         while (navigator.firstChild) { navigator.firstChild.remove() }
         navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
 
