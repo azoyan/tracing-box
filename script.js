@@ -7,7 +7,6 @@ let currentRotation = `rotate(0deg)`;
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
-
 function openFullscreen() {
     // Trigger fullscreen  
     if (html.requestFullscreen) {
@@ -16,8 +15,9 @@ function openFullscreen() {
         html.requestFullscreen.mozRequestFullScreen();
     } else if (html.requestFullscreen.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
         html.requestFullscreen.webkitRequestFullscreen();
-    } else if (html.requestFullscreen.webkitRequestFullScreen) { /* Chrome, Safari and Opera */
-        html.requestFullscreen.webkitRequestFullScreen();
+    } else if (html.webkitEnterFullscreen) { html.webkitEnterFullscreen(); }
+    else if (html.children[0].webkitEnterFullscreen) {//# for Safari iPhone (where only the Video tag itself can be fullscreen)
+        html.children[0].webkitEnterFullscreen();
     }
     else if (html.requestFullscreen.msRequestFullscreen) { /* IE/Edge */
         html.requestFullscreen.msRequestFullscreen();
@@ -38,6 +38,7 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
 }
+
 window.addEventListener('DOMContentLoaded', (event) => {
     const uploadButton = document.querySelector('#uploadButton');
     const fileUpload = document.querySelector('#fileUpload');
@@ -50,8 +51,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         imgElement = document.createElement('img');
         imgElement.src = imageUrl;
-        
         navigator.classList.add("justify-content-center")
+
         while (navigator.firstChild) { navigator.firstChild.remove() }
         navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
 
