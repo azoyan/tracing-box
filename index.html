@@ -20,6 +20,12 @@
     <script src="https://cdn.jsdelivr.net/gh/cotton123236/zoomist@latest/dist/zoomist.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <script>
+        if ('serviceWorker' in navigator) { // Registering our Service worker
+            navigator.serviceWorker.register('sw.js', { scope: './' })
+        }
+    </script>
 </head>
 
 <body>
