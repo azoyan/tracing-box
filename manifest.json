@@ -19,5 +19,6 @@
     "display": "standalone",
     "scope": "/tracing-paper",
     "start_url": "/tracing-paper",
-    "id": "/tracing-paper"
+    "id": "/tracing-paper",
+    "orientation":  "portrait"
 }
