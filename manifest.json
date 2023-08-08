@@ -18,5 +18,6 @@
     "background_color": "#ffffff",
     "display": "fullscreen",
     "scope": "/tracing-paper",
-    "start_url": "/tracing-paper"
+    "start_url": "/tracing-paper",
+    "id": "/tracing-paper"
 }
