@@ -49,10 +49,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
 <script src='script.js'></script>
 <script>
-    if ('serviceWorker' in navigator) { // Registering our Service worker
-        navigator.serviceWorker.register('sw.js', { scope: './' })
-    }
-
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
             navigator.serviceWorker
