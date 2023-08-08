@@ -1,6 +1,6 @@
 {
     "name": "Tracing Paper",
-    "short_name": "tracing paper",
+    "short_name": "Tracing Paper",
     "description": "Tracing paper or light box or tracing box for draw image",
     "icons": [
         {
@@ -16,7 +16,7 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "fullscreen",
+    "display": "standalone",
     "scope": "/tracing-paper",
     "start_url": "/tracing-paper",
     "id": "/tracing-paper"

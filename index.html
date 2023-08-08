@@ -57,6 +57,34 @@
                 .catch(err => console.log("service worker not registered", err))
         })
     }
+
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Display an installation button or some UI element
+        // to let the user know they can install your PWA.
+        showInstallButton();
+    });
+
+    function showInstallButton() {
+        // Logic to show your installation button
+
+        // When the button is clicked:
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+            deferredPrompt = null;
+        });
+    }
+
 </script>
 
 </html>
