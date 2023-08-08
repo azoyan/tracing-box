@@ -1,6 +1,7 @@
 {
     "name": "Tracing Paper",
     "short_name": "tracing paper",
+    "description": "Tracing paper or light box or tracing box for draw image",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -17,5 +18,5 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/"
+    "start_url": "/tracing-paper"
 }
