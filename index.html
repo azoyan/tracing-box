@@ -44,8 +44,24 @@
         <input type="file" id="fileUpload" hidden accept="image/*">
         <button id="uploadButton" class="btn btn-primary btn-lg">Upload Image</button>
     </div>
+
     <div id="zoomist"></div>
-    <button id="install" class="btn btn-primary" hidden>Install</button>
+
+    <div class="p-3 position-fixed bottom-0 end-0" id="toastPlacement">
+        <div class="toast" id="installToast" role="alert" aria-live="assertive" aria-atomic="true"  data-bs-autohide="false">
+            <div class="toast-header">
+                <strong class="me-auto">Install Tracing Paper</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Install app for a better experience.
+                <button class="btn btn-primary btn-sm" id="installBtn">Install</button>
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
 <script src='script.js'></script>
@@ -59,35 +75,31 @@
         })
     }
 
-    let installPrompt = null;
-    const installButton = document.querySelector("#install");
+    let deferredPrompt;
 
-    window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault();
-        installPrompt = event;
-        installButton.removeAttribute("hidden");
-    });
-    installButton.addEventListener("click", async () => {
-        if (!installPrompt) {
-            return;
-        }
-        const result = await installPrompt.prompt();
-        console.log(`Install prompt was: ${result.outcome}`);
-        disableInAppInstallPrompt();
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Show the toast
+        const toast = new bootstrap.Toast(document.getElementById('installToast'));
+        toast.show();
+
+        // Handle the click event on the "Install" button
+        document.getElementById('installBtn').addEventListener('click', () => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+                toast.hide();
+            });
+        });
     });
 
-    function disableInAppInstallPrompt() {
-        installPrompt = null;
-        installButton.setAttribute("hidden", "");
-    }
-    window.addEventListener("appinstalled", () => {
-        disableInAppInstallPrompt();
-    });
-
-    function disableInAppInstallPrompt() {
-        installPrompt = null;
-        installButton.setAttribute("hidden", "");
-    }
 </script>
 
 </html>
