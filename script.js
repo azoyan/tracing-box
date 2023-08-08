@@ -98,12 +98,12 @@ function transformImage(debugText) {
 }
 
 function lockImage() {
+    screen.orientation.lock(screen.orientation.type)
     zoomist.options.draggable = false
     zoomist.options.pinchable = false
     zoomist.options.wheelable = false
     while (navigator.firstChild) { navigator.firstChild.remove() }
     navigator.appendChild(createButtonPanel([createRange(), createFullscreenButton()]))
-
     document.addEventListener('click', function enableNoSleep() {
         document.removeEventListener('click', enableNoSleep, false);
         noSleep.enable();
@@ -197,6 +197,7 @@ function createRange() {
 }
 
 function unlockImage() {
+    screen.orientation.unlock()
     while (navigator.firstChild) { navigator.firstChild.remove() }
     navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
     zoomist.options.draggable = true
