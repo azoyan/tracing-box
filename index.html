@@ -45,6 +45,7 @@
         <button id="uploadButton" class="btn btn-primary btn-lg">Upload Image</button>
     </div>
     <div id="zoomist"></div>
+    <button id="install" class="btn btn-primary" hidden>Install</button>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
 <script src='script.js'></script>
@@ -58,33 +59,35 @@
         })
     }
 
-    let deferredPrompt;
+    let installPrompt = null;
+    const installButton = document.querySelector("#install");
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-
-        // Display an installation button or some UI element
-        // to let the user know they can install your PWA.
-        showInstallButton();
+    window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        installPrompt = event;
+        installButton.removeAttribute("hidden");
+    });
+    installButton.addEventListener("click", async () => {
+        if (!installPrompt) {
+            return;
+        }
+        const result = await installPrompt.prompt();
+        console.log(`Install prompt was: ${result.outcome}`);
+        disableInAppInstallPrompt();
     });
 
-    function showInstallButton() {
-        // Logic to show your installation button
-
-        // When the button is clicked:
-        deferredPrompt.prompt();
-
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            } else {
-                console.log('User dismissed the install prompt');
-            }
-            deferredPrompt = null;
-        });
+    function disableInAppInstallPrompt() {
+        installPrompt = null;
+        installButton.setAttribute("hidden", "");
     }
+    window.addEventListener("appinstalled", () => {
+        disableInAppInstallPrompt();
+    });
 
+    function disableInAppInstallPrompt() {
+        installPrompt = null;
+        installButton.setAttribute("hidden", "");
+    }
 </script>
 
 </html>
