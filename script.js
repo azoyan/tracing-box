@@ -211,8 +211,10 @@ function showIosInstallModal(localStorageKey) {
     // detect if the device is on iOS
     const isIos = () => {
         const userAgent = window.navigator.userAgent.toLowerCase();
+
         return /iphone|ipad|ipod/.test(userAgent);
     };
+    console.log("isIos", isIos());
 
     // check if the device is in standalone mode
     const isInStandaloneMode = () => {
