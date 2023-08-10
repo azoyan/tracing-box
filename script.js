@@ -40,10 +40,12 @@ function closeFullscreen() {
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    const uploadButton = document.querySelector('#uploadButton');
     const fileUpload = document.querySelector('#fileUpload');
-
+    const uploadButton = document.querySelector('#uploadButton');
     uploadButton.addEventListener('click', () => fileUpload.click());
+
+    const uploadButton2 = document.querySelector('#uploadButton2');
+    uploadButton2.addEventListener('click', () => fileUpload.click());
 
     fileUpload.addEventListener('change', (event) => {
         const file = event.target.files[0];
