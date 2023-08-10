@@ -125,6 +125,8 @@
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
+        let isIos = showIosInstallModal("ios");
+        console.log("isIOS", isIos)
 
         // Show the toast
         const toast = new bootstrap.Toast(document.getElementById('installToast'));
