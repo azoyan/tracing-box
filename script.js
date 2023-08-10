@@ -108,6 +108,7 @@ function lockImage() {
         document.removeEventListener('click', enableNoSleep, false);
         noSleep.enable();
     }, false);
+    document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 }
 
 function createButtonPanel(elements) {
