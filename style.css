@@ -1,6 +1,5 @@
 body {
-    overflow: hidden;
-    touch-action: pan-y, pan-x;
+    /* overflow: hidden; */
 }
 
 .custom-range::-webkit-slider-runnable-track {
