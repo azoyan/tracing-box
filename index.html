@@ -101,7 +101,7 @@
                 <strong class="me-auto"> Install Tracing Paper App</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body">
+            <div class="toast-body" id="toast-body">
                 Install app for a better experience
                 <button class="btn btn-primary btn-sm" id="installBtn">Install</button>
             </div>
@@ -126,27 +126,27 @@
         e.preventDefault();
         deferredPrompt = e;
         let isIos = showIosInstallModal("ios");
-        console.log("isIOS", isIos)
-
-        // Show the toast
         const toast = new bootstrap.Toast(document.getElementById('installToast'));
-        toast.show();
-
-        // Handle the click event on the "Install" button
-        document.getElementById('installBtn').addEventListener('click', () => {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                } else {
-                    console.log('User dismissed the install prompt');
-                }
-                deferredPrompt = null;
-                toast.hide();
+        if (isIos) {
+            document.getElementById("toast-body").innerText = 'Install this application on your home screen for quick, easy and offline access when you’re on the go. Close this modal, tap the “share” icon, and then tap on “Add to home screen”.'
+        }
+        else {
+            // Handle the click event on the "Install" button
+            document.getElementById('installBtn').addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                    toast.hide();
+                });
             });
-        });
+        }
+        toast.show();
     });
-
 </script>
 
 </html>
