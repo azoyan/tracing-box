@@ -57,6 +57,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
 
         document.getElementById("uploadForm").remove();
+        document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
         // let el = document.getElementById("#zoomist");
         zoomist = new Zoomist('#zoomist', {
@@ -108,7 +109,6 @@ function lockImage() {
         document.removeEventListener('click', enableNoSleep, false);
         noSleep.enable();
     }, false);
-    document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 }
 
 function createButtonPanel(elements) {
