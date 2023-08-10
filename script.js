@@ -207,7 +207,7 @@ function unlockImage() {
 
 }
 
-function showIosInstallModal(localStorageKey) {
+function showIosInstallModal() {
     // detect if the device is on iOS
     const isIos = () => {
         const userAgent = window.navigator.userAgent.toLowerCase();
@@ -223,15 +223,7 @@ function showIosInstallModal(localStorageKey) {
         );
     };
     // show the modal only once
-    const localStorageKeyValue = localStorage.getItem(localStorageKey);
-    const iosInstallModalShown = localStorageKeyValue
-        ? JSON.parse(localStorageKeyValue)
-        : false;
-    console.log("isIos", isIos(), "isStandalone", isInStandaloneMode(), "iosInstallModalShown", iosInstallModalShown);
-    const shouldShowModalResponse =
-        isIos() && !isInStandaloneMode() && !iosInstallModalShown;
-    if (shouldShowModalResponse) {
-        localStorage.setItem(localStorageKey, "true");
-    }
+    console.log("isIos", isIos(), "isStandalone", isInStandaloneMode());
+    const shouldShowModalResponse = isIos() && !isInStandaloneMode();
     return shouldShowModalResponse;
 }
