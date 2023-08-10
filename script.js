@@ -214,7 +214,6 @@ function showIosInstallModal(localStorageKey) {
 
         return /iphone|ipad|ipod/.test(userAgent);
     };
-    console.log("isIos", isIos());
 
     // check if the device is in standalone mode
     const isInStandaloneMode = () => {
@@ -223,12 +222,12 @@ function showIosInstallModal(localStorageKey) {
             window.navigator.standalone
         );
     };
-
     // show the modal only once
     const localStorageKeyValue = localStorage.getItem(localStorageKey);
     const iosInstallModalShown = localStorageKeyValue
         ? JSON.parse(localStorageKeyValue)
         : false;
+    console.log("isIos", isIos(), "isStandalone", isInStandaloneMode(), "iosInstallModalShown", iosInstallModalShown);
     const shouldShowModalResponse =
         isIos() && !isInStandaloneMode() && !iosInstallModalShown;
     if (shouldShowModalResponse) {
