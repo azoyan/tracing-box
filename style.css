@@ -1,6 +1,3 @@
-body {
-    /* overflow: hidden; */
-}
 
 .custom-range::-webkit-slider-runnable-track {
     background: lightsteelblue
@@ -23,7 +20,7 @@ input[type="range"] {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-    /*Webkit Browsers like Chome and Safari*/
+    /*Webkit Browsers like Chrome and Safari*/
     pointer-events: auto;
 }
 

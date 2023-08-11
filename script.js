@@ -1,9 +1,9 @@
-const navigator = document.getElementById("nav");
 let zoomist;
 let noSleep = new NoSleep();
 let html = document.documentElement;
 let imgElement;
 let currentRotation = `rotate(0deg)`;
+let settings = null
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
@@ -30,9 +30,7 @@ function closeFullscreen() {
     } else if (document.mozCancelFullScreen) { /* Firefox */
         document.mozCancelFullScreen();
     } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-        document.webkitExitFullscreen();
-    } else if (document.webkitExitFullScreen) { /* Chrome, Safari and Opera */
-        document.webkitExitFullScreen();
+        document.webkitExitFullscreen()
     }
     else if (document.msExitFullscreen) { /* IE/Edge */
         document.msExitFullscreen();
@@ -53,14 +51,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         imgElement = document.createElement('img');
         imgElement.src = imageUrl;
-        navigator.classList.add("justify-content-center")
 
-        while (navigator.firstChild) { navigator.firstChild.remove() }
-        navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
+        settings = { orientation: screen.orientation.type, locked: false, isFullscreen: false }
 
         document.getElementById("uploadForm").remove();
         document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
-
+        document.body.style.overflow = "hidden"
+        document.body.style.touchAction = "pan-y, pan-x"
         // let el = document.getElementById("#zoomist");
         zoomist = new Zoomist('#zoomist', {
             maxRatio: 15,
@@ -89,6 +86,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 },
             }
         })
+        updateButtonPanel()
     });
 });
 
@@ -100,38 +98,103 @@ function transformImage(debugText) {
     wrapper.style.height = "100dvh";
 }
 
-function lockImage() {
-    screen.orientation.lock(screen.orientation.type)
-    zoomist.options.draggable = false
-    zoomist.options.pinchable = false
-    zoomist.options.wheelable = false
-    while (navigator.firstChild) { navigator.firstChild.remove() }
-    navigator.appendChild(createButtonPanel([createRange(), createFullscreenButton()]))
-    document.addEventListener('click', function enableNoSleep() {
-        document.removeEventListener('click', enableNoSleep, false);
-        noSleep.enable();
-    }, false);
-}
+function createHorizontalButtonPanel() {
+    const mainNav = document.getElementById("navbar");
+    mainNav.removeAttribute("style");
 
-function createButtonPanel(elements) {
-    let panel = document.createElement('div')
+    const navigator = document.getElementById("nav");
+    navigator.classList.add("justify-content-center")
+    while (navigator.firstChild) { navigator.firstChild.remove() }
+
+    navigator.removeAttribute("style");
+
+    const panel = document.createElement('div')
     panel.classList.add("row")
 
-    for (let i = 0; i < elements.length; ++i) {
-        let col = document.createElement('div')
-        col.classList.add("col", "col-auto")
-        col.appendChild(elements[i])
-        panel.appendChild(col)
+    const lockButtonColumn = document.createElement('div')
+    lockButtonColumn.classList.add("col", "col-auto")
+    if (!settings.locked) {
+        lockButtonColumn.appendChild(createLockButton("Lock"))
+        panel.appendChild(lockButtonColumn)
+        const rotateButtonColumn = document.createElement('div')
+        rotateButtonColumn.classList.add("col", "col-auto")
+        rotateButtonColumn.appendChild(createRotateButton())
+        panel.appendChild(rotateButtonColumn)
+    } else {
+        panel.appendChild(lockButtonColumn)
+        lockButtonColumn.appendChild(createUnlockButton("Unlock"))
     }
-    return panel
+
+    let fullscreenButtonColumn = document.createElement('div')
+    fullscreenButtonColumn.classList.add("col", "col-auto")
+    fullscreenButtonColumn.appendChild(createFullscreenButton())
+    panel.appendChild(fullscreenButtonColumn)
+
+    navigator.appendChild(panel)
+    mainNav.appendChild(navigator)
+
+    let zoomist = document.getElementById("zoomist")
+    zoomist.style.width = "100%"
+    zoomist.style.marginLeft = "0%"
 }
 
-function createLockButton() {
+function createVerticalButtonPanel() {
+    const mainNav = document.getElementById("navbar");
+
+    mainNav.style.width = "5%"
+    mainNav.style.height = "100%"
+    mainNav.style.position = "fixed"
+    mainNav.style.flexDirection = "column"
+    const navigator = document.getElementById("nav");
+    while (navigator.firstChild) { navigator.firstChild.remove() }
+    navigator.style.height = "100%"
+    navigator.style.width = "5%"
+    navigator.classList.add("justify-content-center")
+
+    const lockButtonRow = document.createElement('div')
+    lockButtonRow.classList.add("row")
+    if (!settings.locked) {
+        let lockButtonCol = document.createElement('div');
+        lockButtonCol.classList.add("col")
+        lockButtonCol.appendChild(createLockButton(""))
+        lockButtonRow.appendChild(lockButtonCol)
+        navigator.appendChild(lockButtonRow)
+
+        const rotateButtonRow = document.createElement('div')
+        rotateButtonRow.classList.add("row", "mt-1")
+        let rotateButtonCol = document.createElement('div');
+        rotateButtonCol.classList.add("col")
+        rotateButtonCol.appendChild(createRotateButton())
+        rotateButtonRow.appendChild(rotateButtonCol)
+        navigator.appendChild(rotateButtonRow)
+    } else {
+        let lockButtonCol = document.createElement('div');
+        lockButtonCol.classList.add("col")
+        lockButtonCol.appendChild(createUnlockButton(""))
+        lockButtonRow.appendChild(lockButtonCol)
+        navigator.appendChild(lockButtonRow)
+    }
+
+    const fullscreenButtonRow = document.createElement('div')
+    fullscreenButtonRow.classList.add("row", "mt-1")
+    let col = document.createElement('div')
+    col.classList.add('col')
+    col.appendChild(createFullscreenButton())
+
+    fullscreenButtonRow.appendChild(col)
+    navigator.appendChild(fullscreenButtonRow)
+
+    let zoomist = document.getElementById("zoomist")
+    zoomist.style.width = "100%"
+    zoomist.style.marginLeft = "5%"
+}
+
+function createLockButton(text) {
     let button = document.createElement('button');
     button.classList.add("btn", "btn-outline-primary", "btn-sm", "d-flex", "align-items-center")
     button.onclick = lockImage
     button.innerHTML += `<i class="bi bi-lock"></i>`
-    button.innerHTML += `<span class="d-none d-sm-inline">Lock</span>`
+    button.innerHTML += `<span class="d-none d-sm-inline">${text}</span>`
     return button
 }
 let rotation = 0;
@@ -160,15 +223,22 @@ function createFullscreenButton() {
     let button = document.createElement('button');
     button.classList.add("btn", "btn-outline-secondary", "btn-sm", "d-flex", "align-items-center")
     console.log("isNotFullScreen", !document.fullscreenElement)
-    button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
+    if (!document.fullscreenElement) {
+        button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
+    }
+    else {
+        button.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
+    }
     document.addEventListener("fullscreenchange", (event) => {
         if (document.fullscreenElement == null) {
             console.log("exit fullscreen")
             button.innerHTML = `<i class="bi bi-arrows-fullscreen"></i>`
+            settings.isFullscreen = false
         }
         else {
             console.log("enter fullscreen")
             button.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
+            settings.isFullscreen = true
         }
     });
     button.onclick = function () {
@@ -190,24 +260,48 @@ function createLabel(text) {
     label.innerText = text
     return label
 }
-function createRange() {
+function createUnlockButton(text) {
     let button = document.createElement('button');
     button.classList.add("btn", "btn-outline-success", "btn-sm", "d-flex", "align-items-center")
     button.onclick = unlockImage
     button.innerHTML += `<i class="bi bi-unlock"></i>`
-    button.innerHTML += `<span class="d-none d-sm-inline">Unlock</span>`
+    button.innerHTML += `<span class="d-none d-sm-inline">${text}</span>`
     return button
 }
 
 function unlockImage() {
-    screen.orientation.unlock()
-    while (navigator.firstChild) { navigator.firstChild.remove() }
-    navigator.appendChild(createButtonPanel([createLockButton(), createRotateButton(), createFullscreenButton()]))
+    // screen.orientation.unlock()
+    settings.locked = false
     zoomist.options.draggable = true
     zoomist.options.pinchable = true
     zoomist.options.wheelable = true
     noSleep.disable()
+    updateButtonPanel()
+}
 
+function lockImage() {
+    // screen.orientation.lock(screen.orientation.type)
+    zoomist.options.draggable = false
+    zoomist.options.pinchable = false
+    zoomist.options.wheelable = false
+    settings.locked = true
+    document.addEventListener('click', function enableNoSleep() {
+        document.removeEventListener('click', enableNoSleep, false);
+        noSleep.enable();
+    }, false);
+    updateButtonPanel()
+}
+
+function updateButtonPanel() {
+    if (settings) {
+        let isMobile = window.matchMedia("(any-pointer:coarse)").matches;
+        if (/landscape/.test(screen.orientation.type) && isMobile) {
+            createVerticalButtonPanel()
+        }
+        else {
+            createHorizontalButtonPanel()
+        }
+    }
 }
 
 function showIosInstallModal() {
@@ -230,3 +324,15 @@ function showIosInstallModal() {
     const shouldShowModalResponse = isIos() && !isInStandaloneMode();
     return shouldShowModalResponse;
 }
+
+window.addEventListener("orientationchange", () => {
+    console.log(`The orientation of the screen is: ${screen.orientation.type}`);
+    if (settings !== null) {
+
+        if (/landscape/.test(screen.orientation.type)) {
+            createVerticalButtonPanel()
+        } else {
+            createHorizontalButtonPanel()
+        }
+    }
+});
