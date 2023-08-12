@@ -293,9 +293,8 @@ function lockImage() {
 }
 
 function updateButtonPanel() {
-    if (settings) {
-        let isMobile = window.matchMedia("(any-pointer:coarse)").matches;
-        if (/landscape/.test(screen.orientation.type) && isMobile) {
+    if (settings) {        
+        if (/landscape/.test(screen.orientation.type) && isMobile(window.navigator).phone) {
             createVerticalButtonPanel()
         }
         else {
