@@ -284,17 +284,18 @@ function lockImage() {
     zoomist.options.pinchable = false
     zoomist.options.wheelable = false
     settings.locked = true
-    noSleep.enable()
+    noSleep.enable();
     // document.addEventListener('click', function enableNoSleep() {
     //     document.removeEventListener('click', enableNoSleep, false);
-    //     noSleep.enable();
+        
     // }, false);
     updateButtonPanel()
 }
 
 function updateButtonPanel() {
-    if (settings) {        
-        if (/landscape/.test(screen.orientation.type) && isMobile(window.navigator).phone) {
+    if (settings) {
+        let isMobile = window.matchMedia("(pointer:coarse)").matches;
+        if (/landscape/.test(screen.orientation.type) && isMobile) {
             createVerticalButtonPanel()
         }
         else {
