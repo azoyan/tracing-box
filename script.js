@@ -335,3 +335,15 @@ window.addEventListener("orientationchange", () => {
         }
     }
 });
+
+
+
+document.addEventListener('visibilitychange', function() {
+    if(document.visiblityState == 'hidden') {
+      
+    }
+    else if(document.visibilityState == 'visible') {
+        updateButtonPanel()
+    }
+  });
+  
