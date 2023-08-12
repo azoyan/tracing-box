@@ -280,15 +280,15 @@ function unlockImage() {
 }
 
 function lockImage() {
-    // screen.orientation.lock(screen.orientation.type)
     zoomist.options.draggable = false
     zoomist.options.pinchable = false
     zoomist.options.wheelable = false
     settings.locked = true
-    document.addEventListener('click', function enableNoSleep() {
-        document.removeEventListener('click', enableNoSleep, false);
-        noSleep.enable();
-    }, false);
+    noSleep.enable()
+    // document.addEventListener('click', function enableNoSleep() {
+    //     document.removeEventListener('click', enableNoSleep, false);
+    //     noSleep.enable();
+    // }, false);
     updateButtonPanel()
 }
 
