@@ -140,7 +140,7 @@ function createHorizontalButtonPanel() {
 
 function createVerticalButtonPanel() {
     const mainNav = document.getElementById("navbar");
-
+    
     mainNav.style.width = "5%"
     mainNav.style.height = "100%"
     mainNav.style.position = "fixed"
@@ -162,11 +162,13 @@ function createVerticalButtonPanel() {
 
         const rotateButtonRow = document.createElement('div')
         rotateButtonRow.classList.add("row", "mt-1")
-        let rotateButtonCol = document.createElement('div');
+        const rotateButtonCol = document.createElement('div');
         rotateButtonCol.classList.add("col")
-        rotateButtonCol.appendChild(createRotateButton())
+        const rotateButton = createRotateButton()
+        rotateButtonCol.appendChild(rotateButton)
         rotateButtonRow.appendChild(rotateButtonCol)
         navigator.appendChild(rotateButtonRow)
+        mainNav.style.width = (rotateButton.getBoundingClientRect().width + 6) + 'px';
     } else {
         let lockButtonCol = document.createElement('div');
         lockButtonCol.classList.add("col")
@@ -186,7 +188,7 @@ function createVerticalButtonPanel() {
 
     let zoomist = document.getElementById("zoomist")
     zoomist.style.width = "100%"
-    zoomist.style.marginLeft = "5%"
+    zoomist.style.marginLeft = mainNav.style.width
 }
 
 function createLockButton(text) {
@@ -285,10 +287,7 @@ function lockImage() {
     zoomist.options.wheelable = false
     settings.locked = true
     noSleep.enable();
-    // document.addEventListener('click', function enableNoSleep() {
-    //     document.removeEventListener('click', enableNoSleep, false);
-        
-    // }, false);
+
     updateButtonPanel()
 }
 
