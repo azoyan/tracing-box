@@ -20,7 +20,8 @@
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tracing Paper">
-    <meta name="twitter:description" content="Transform your device into a lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen.">
+    <meta name="twitter:description"
+        content="Transform your device into a lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen.">
     <meta name="twitter:image" content="/tracing-paper/android-chrome-192x192.png">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/tracing-paper/apple-touch-icon.png">
@@ -61,18 +62,28 @@
     </nav>
     <div class="container my-4 text-center justify-content-center" id="uploadForm">
 
-        <div class="row mx-3 justify-content-center text-center">
-            <ol class="list-group-numbered list-group-flush">
-                <li class="list-group-item">
-                    <button id="uploadButton" class="btn btn-primary">Upload Image</button>
-                </li>
-                <li class="list-group-item pt-3">
-                    Press on the <strong>"Lock" </strong>
-                    <div class="btn btn-sm btn-outline-primary" style="pointer-events: none;"><i class="bi bi-lock"></i>
-                    </div> button to keep awake and prevent accidental touches
-                </li>
-                <li class="list-group-item pt-3"><strong>Trace the image on paper</strong></li>
-            </ol>
+        <div class="row justify-content-center">
+            <div class="col mx-5 col-sm-auto align-self-center">
+                <div class="row text-center">
+                    <div class="col">
+                        <button id="uploadButton" class="btn btn-primary btn-lg">Upload Image</button>
+                    </div>
+                </div>
+                <div class="row pt-3 text-start">
+                    <div class="col">
+                        2. Press on the <strong>"Lock" </strong>
+                        <div class="btn btn-sm btn-outline-primary" style="pointer-events: none;"><i
+                                class="bi bi-lock"></i>
+                        </div> button to keep awake and prevent accidental touches
+                    </div>
+                </div>
+
+                <div class="row pt-3 text-start">
+                    <div class="col">
+                        3. <strong>Trace the image on paper</strong>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row mb-4 justify-content-center text-center">
             <video style="max-height: 640px; max-width: 360px" class="object-fit-sm-contain rounded" loop controls
@@ -83,8 +94,12 @@
             </video>
         </div>
         <div class="row my-4 px-3 text-start justify-content-center">
-            <p>Tranform your device into a lightbox with <strong>Tracing Paper</strong> app. Upload an image, adjust the brightness, and place paper or painting canvas on top to trace it</p>
-            <p class="text-center"><em>For artists, crafters, and anyone looking for creative inspiration.</em></p>
+            <div class="col align-self-center col-auto">
+                <p>Transform your device into a lightbox with <strong>Tracing Paper</strong> app. Upload an image,
+                    adjust the
+                    brightness, and place paper or painting canvas on top to trace it</p>
+                <p class="text-center"><em>For artists, crafters, and anyone looking for creative inspiration.</em></p>
+            </div>
         </div>
         <div class="row mt-1 mb-5">
             <div class="col">
@@ -111,17 +126,21 @@
         </div>
     </div>
     <div class="bg-light" style="height: 185px;">
-    <footer style="/*! display: ; */position: unset;" class="pt-4 my-4 ">
-    <ul class="nav justify-content-center pt-3 mb-3">
-        <li class="nav-item"><a class="nav-link px-2 text-body-secondary">tracingbox</a></li>
-        <li class="nav-item"><a class="nav-link px-2 text-body-secondary">lightbox</a></li>
-        <li class="nav-item"><p class="nav-link px-2 text-body-secondary">tracing box</p></li>
-        <li class="nav-item"><p class="nav-link px-2 text-body-secondary">light box</p></li>
-    </ul>
-        <p class="text-center text-body-secondary">Ivan Azoyan 2023
-            <a class="text-center text-body-secondary" href="https://github.com/azoyan/tracing-paper/">GitHub</a>
-        </p>
-      </footer>
+        <footer style="/*! display: ; */position: unset;" class="pt-4 my-4 ">
+            <ul class="nav justify-content-center pt-3 mb-3">
+                <li class="nav-item"><a class="nav-link px-2 text-body-secondary">tracingbox</a></li>
+                <li class="nav-item"><a class="nav-link px-2 text-body-secondary">lightbox</a></li>
+                <li class="nav-item">
+                    <p class="nav-link px-2 text-body-secondary">tracing box</p>
+                </li>
+                <li class="nav-item">
+                    <p class="nav-link px-2 text-body-secondary">light box</p>
+                </li>
+            </ul>
+            <p class="text-center text-body-secondary">Ivan Azoyan 2023
+                <a class="text-center text-body-secondary" href="https://github.com/azoyan/tracing-paper/">GitHub</a>
+            </p>
+        </footer>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
