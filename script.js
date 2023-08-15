@@ -168,14 +168,14 @@ function createVerticalButtonPanel() {
         lockButtonCol.classList.add("col")
         lockButtonCol.appendChild(createLockButton(""))
         lockButtonRow.appendChild(lockButtonCol)
-        navigator.appendChild(lockButtonRow)
-        rotateButton.style.visibility = "hidden";
+        navigator.appendChild(lockButtonRow)        
     } else {
         let lockButtonCol = document.createElement('div');
         lockButtonCol.classList.add("col")
         lockButtonCol.appendChild(createUnlockButton(""))
         lockButtonRow.appendChild(lockButtonCol)
         navigator.appendChild(lockButtonRow)
+        rotateButton.style.visibility = "hidden";
     }
 
     const fullscreenButtonRow = document.createElement('div')
