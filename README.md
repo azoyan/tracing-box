@@ -5,7 +5,7 @@ This intuitive application transforms your smartphone or tablet into a modern-da
 
 1. **Upload image** onto the app
 2. Press on the **"Lock"** button to keep awake and prevent accidental touches
-3. Trace the image and enjoy
+3. Trace the image on paper or painting canvas end enjoy
 
 Look at video:
 
