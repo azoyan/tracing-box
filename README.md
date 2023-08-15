@@ -8,6 +8,6 @@ This intuitive application transforms your smartphone or tablet into a modern-da
 3. Trace the image and enjoy
  
 <div align="center">
-  <video src="https://github.com/azoyan/tracing-paper/assets/10195144/9c575d49-b956-4cd6-a4b5-e97073d3dfd0" width="400" />
+  <video src="https://github.com/azoyan/tracing-paper/assets/10195144/9c575d49-b956-4cd6-a4b5-e97073d3dfd0" width="400" autoplay muted/>
 </div>
 
