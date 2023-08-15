@@ -168,7 +168,7 @@ function createVerticalButtonPanel() {
         rotateButtonCol.appendChild(rotateButton)
         rotateButtonRow.appendChild(rotateButtonCol)
         navigator.appendChild(rotateButtonRow)
-        mainNav.style.width = (rotateButton.getBoundingClientRect().width + 6) + 'px';
+        mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
     } else {
         let lockButtonCol = document.createElement('div');
         lockButtonCol.classList.add("col")
