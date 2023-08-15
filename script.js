@@ -153,22 +153,23 @@ function createVerticalButtonPanel() {
 
     const lockButtonRow = document.createElement('div')
     lockButtonRow.classList.add("row")
+    
+    const rotateButtonRow = document.createElement('div')
+    rotateButtonRow.classList.add("row", "mt-1")
+    const rotateButtonCol = document.createElement('div');
+    rotateButtonCol.classList.add("col")
+    const rotateButton = createRotateButton()
+    rotateButtonCol.appendChild(rotateButton)
+    rotateButtonRow.appendChild(rotateButtonCol)
+    navigator.appendChild(rotateButtonRow)
+    mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
     if (!settings.locked) {
         let lockButtonCol = document.createElement('div');
         lockButtonCol.classList.add("col")
         lockButtonCol.appendChild(createLockButton(""))
         lockButtonRow.appendChild(lockButtonCol)
         navigator.appendChild(lockButtonRow)
-
-        const rotateButtonRow = document.createElement('div')
-        rotateButtonRow.classList.add("row", "mt-1")
-        const rotateButtonCol = document.createElement('div');
-        rotateButtonCol.classList.add("col")
-        const rotateButton = createRotateButton()
-        rotateButtonCol.appendChild(rotateButton)
-        rotateButtonRow.appendChild(rotateButtonCol)
-        navigator.appendChild(rotateButtonRow)
-        mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
+        rotateButton.style.visibility = "hidden";
     } else {
         let lockButtonCol = document.createElement('div');
         lockButtonCol.classList.add("col")
