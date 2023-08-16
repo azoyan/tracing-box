@@ -59,6 +59,20 @@
             </ul>
         </div>
     </nav>
+    <div class="p-3 position-fixed bottom-0 start-50 translate-middle-x" style="z-index: 9999;">
+        <div class="toast" id="toastTooltip" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="true">
+            <div class="toast-header">
+                <i class="bi bi-pencil-square"> </i>
+                <strong class="me-auto text-success"> Tooltip</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-body" style="background: white;">
+                Press <button class="btn btn-outline-secondary btn-sm" onclick="openFullscreen()"><i
+                        class="bi bi-arrows-fullscreen"></i> Fullscreen </button> to hold device orientation
+            </div>
+        </div>
+    </div>
     <div class="container my-4" id="uploadForm">
 
         <div class="row">
@@ -107,7 +121,7 @@
 
     <div id="zoomist"></div>
 
-    <div class="p-3 position-fixed bottom-0 start-50 translate-middle-x" id="toastPlacement">
+    <div class="p-3 position-fixed bottom-0 start-50 translate-middle-x">
         <div class="toast" id="installToast" role="alert" aria-live="assertive" aria-atomic="true"
             data-bs-autohide="false">
             <div class="toast-header">

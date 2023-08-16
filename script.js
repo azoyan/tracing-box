@@ -22,6 +22,8 @@ function openFullscreen() {
     else if (html.requestFullscreen.msRequestFullscreen) { /* IE/Edge */
         html.requestFullscreen.msRequestFullscreen();
     }
+    const toast = new bootstrap.Toast(document.getElementById('toastTooltip'));
+    toast.hide()
 }
 
 function closeFullscreen() {
@@ -201,6 +203,7 @@ function createLockButton(text) {
     let button = document.createElement('button');
     button.classList.add("btn", "btn-outline-primary", "btn-sm", "d-flex", "align-items-center")
     button.onclick = lockImage
+
     button.innerHTML += `<i class="bi bi-lock"></i>`
     button.innerHTML += `<span class="d-none d-sm-inline">${text}</span>`
     return button
@@ -247,6 +250,7 @@ function createFullscreenButton() {
             console.log("enter fullscreen")
             button.innerHTML = `<i class="bi bi-fullscreen-exit"></i>`
             settings.isFullscreen = true
+            lockOrientation()
         }
     });
     button.onclick = function () {
@@ -287,13 +291,7 @@ function unlockImage() {
     updateButtonPanel()
 }
 
-function lockImage() {
-    zoomist.options.draggable = false
-    zoomist.options.pinchable = false
-    zoomist.options.wheelable = false
-    settings.locked = true
-    noSleep.enable();
-
+function lockOrientation() {
     let orientation = screen.orientation.type;
     let textContent = "text-content:" + orientation
     screen.orientation.lock(orientation)
@@ -302,8 +300,33 @@ function lockImage() {
         })
         .catch((error) => {
             textContent += `Error: ${error}\n`;
-            alert(textContent)
+            if (error instanceof DOMException && error.name === "NotSupportedError") {
+                console.error("This feature is not supported on your device.");
+            } else if (error instanceof DOMException && error.name === "SecurityError") {
+                // console.error("You do not have permission to perform this action.");
+
+                if (!settings.isFullscreen) {
+                    const toast = new bootstrap.Toast(document.getElementById('toastTooltip'));
+                    toast.show()
+                    console.log("lockImage show", toast)
+                }
+            } else if (error instanceof TypeError) {
+                console.error("There is a problem with the data type of one of your variables.");
+            } else {
+                console.error("An unknown error occurred.");
+            }
+            // alert(error, textContent)
         });
+}
+
+function lockImage() {
+    zoomist.options.draggable = false
+    zoomist.options.pinchable = false
+    zoomist.options.wheelable = false
+    settings.locked = true
+    noSleep.enable();
+    lockOrientation()
+
 
     updateButtonPanel()
 }
