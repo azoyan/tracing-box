@@ -101,6 +101,7 @@ function transformImage(debugText) {
 function createHorizontalButtonPanel() {
     const mainNav = document.getElementById("navbar");
     mainNav.removeAttribute("style");
+    mainNav.classList.add("navbar-expand-lg")
 
     const navigator = document.getElementById("nav");
     navigator.classList.add("justify-content-center")
@@ -140,43 +141,17 @@ function createHorizontalButtonPanel() {
 
 function createVerticalButtonPanel() {
     const mainNav = document.getElementById("navbar");
-    
+
     mainNav.style.width = "5%"
     mainNav.style.height = "100%"
     mainNav.style.position = "fixed"
     mainNav.style.flexDirection = "column"
+    mainNav.classList.remove("navbar-expand-lg")
     const navigator = document.getElementById("nav");
     while (navigator.firstChild) { navigator.firstChild.remove() }
     navigator.style.height = "100%"
     navigator.style.width = "5%"
     navigator.classList.add("justify-content-center")
-
-    const lockButtonRow = document.createElement('div')
-    lockButtonRow.classList.add("row")
-    
-    const rotateButtonRow = document.createElement('div')
-    rotateButtonRow.classList.add("row", "mt-1")
-    const rotateButtonCol = document.createElement('div');
-    rotateButtonCol.classList.add("col")
-    const rotateButton = createRotateButton()
-    rotateButtonCol.appendChild(rotateButton)
-    rotateButtonRow.appendChild(rotateButtonCol)
-    navigator.appendChild(rotateButtonRow)
-    mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
-    if (!settings.locked) {
-        let lockButtonCol = document.createElement('div');
-        lockButtonCol.classList.add("col")
-        lockButtonCol.appendChild(createLockButton(""))
-        lockButtonRow.appendChild(lockButtonCol)
-        navigator.appendChild(lockButtonRow)        
-    } else {
-        let lockButtonCol = document.createElement('div');
-        lockButtonCol.classList.add("col")
-        lockButtonCol.appendChild(createUnlockButton(""))
-        lockButtonRow.appendChild(lockButtonCol)
-        navigator.appendChild(lockButtonRow)
-        rotateButton.style.visibility = "hidden";
-    }
 
     const fullscreenButtonRow = document.createElement('div')
     fullscreenButtonRow.classList.add("row", "mt-1")
@@ -186,6 +161,36 @@ function createVerticalButtonPanel() {
 
     fullscreenButtonRow.appendChild(col)
     navigator.appendChild(fullscreenButtonRow)
+
+    const lockButtonRow = document.createElement('div')
+    lockButtonRow.classList.add("row")
+
+    const rotateButtonRow = document.createElement('div')
+    rotateButtonRow.classList.add("row", "mt-1")
+    const rotateButtonCol = document.createElement('div');
+    rotateButtonCol.classList.add("col")
+    const rotateButton = createRotateButton()
+    rotateButtonCol.appendChild(rotateButton)
+    rotateButtonRow.appendChild(rotateButtonCol)
+    
+    navigator.appendChild(rotateButtonRow)
+    mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
+
+    if (!settings.locked) {
+        let lockButtonCol = document.createElement('div');
+        lockButtonCol.classList.add("col")
+        lockButtonCol.appendChild(createLockButton(""))
+        lockButtonRow.appendChild(lockButtonCol)
+        navigator.appendChild(lockButtonRow)
+    } else {
+        let lockButtonCol = document.createElement('div');
+        lockButtonCol.classList.add("col")
+        lockButtonCol.appendChild(createUnlockButton(""))
+        lockButtonRow.appendChild(lockButtonCol)
+        navigator.appendChild(lockButtonRow)
+        rotateButton.style.visibility = "hidden";
+    }
+    
 
     let zoomist = document.getElementById("zoomist")
     zoomist.style.width = "100%"
@@ -339,12 +344,12 @@ window.addEventListener("orientationchange", () => {
 
 
 
-document.addEventListener('visibilitychange', function() {
-    if(document.visiblityState == 'hidden') {
-      
+document.addEventListener('visibilitychange', function () {
+    if (document.visiblityState == 'hidden') {
+
     }
-    else if(document.visibilityState == 'visible') {
+    else if (document.visibilityState == 'visible') {
         updateButtonPanel()
     }
-  });
-  
+});
+
