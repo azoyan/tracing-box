@@ -172,7 +172,7 @@ function createVerticalButtonPanel() {
     const rotateButton = createRotateButton()
     rotateButtonCol.appendChild(rotateButton)
     rotateButtonRow.appendChild(rotateButtonCol)
-    
+
     navigator.appendChild(rotateButtonRow)
     mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
 
@@ -190,7 +190,7 @@ function createVerticalButtonPanel() {
         navigator.appendChild(lockButtonRow)
         rotateButton.style.visibility = "hidden";
     }
-    
+
 
     let zoomist = document.getElementById("zoomist")
     zoomist.style.width = "100%"
@@ -293,6 +293,17 @@ function lockImage() {
     zoomist.options.wheelable = false
     settings.locked = true
     noSleep.enable();
+
+    let orientation = screen.orientation.type;
+    let textContent = "text-content:" + orientation
+    screen.orientation.lock(orientation)
+        .then(() => {
+            textContent = `Locked to ${orientation}\n`;
+        })
+        .catch((error) => {
+            textContent += `Error: ${error}\n`;
+            alert(textContent)
+        });
 
     updateButtonPanel()
 }
