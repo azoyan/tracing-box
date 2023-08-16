@@ -60,7 +60,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.body.style.touchAction = "pan-y, pan-x"
         // let el = document.getElementById("#zoomist");
         zoomist = new Zoomist('#zoomist', {
-            maxRatio: 15,
             src: imgElement,
             fill: 'contain',
             maxRatio: 8,
@@ -68,7 +67,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             on: {
                 ready() {
                     console.log("ready")
-                    document.querySelector("img").style.transform += currentRotation
+                    document.querySelector("img").style.transform = currentRotation
                     let wrapper = document.getElementsByClassName("zoomist-wrapper")[0]
                     wrapper.style.height = "100dvh";
                 },
@@ -172,7 +171,7 @@ function createVerticalButtonPanel() {
     const rotateButton = createRotateButton()
     rotateButtonCol.appendChild(rotateButton)
     rotateButtonRow.appendChild(rotateButtonCol)
-    
+
     navigator.appendChild(rotateButtonRow)
     mainNav.style.width = (rotateButton.getBoundingClientRect().width + 4) + 'px';
 
@@ -190,7 +189,7 @@ function createVerticalButtonPanel() {
         navigator.appendChild(lockButtonRow)
         rotateButton.style.visibility = "hidden";
     }
-    
+
 
     let zoomist = document.getElementById("zoomist")
     zoomist.style.width = "100%"
@@ -207,22 +206,21 @@ function createLockButton(text) {
 }
 let rotation = 0;
 
+function rotateImage() {
+    rotation -= 90;
+    console.log("rotate Image; rotation", rotation)
+    if (rotation === -360) {
+        rotation = 0;
+    }
+    currentRotation = `rotate(${rotation}deg)`
+    document.querySelector("img").style.transform = currentRotation;
+}
+
 function createRotateButton() {
     let button = document.createElement('button');
     button.classList.add("btn", "btn-outline-primary", "btn-sm", "d-flex", "align-items-center")
     button.type = "button"
-    button.onclick = function () {
-        rotation -= 90;
-        if (rotation === -360) {
-            // 360 means rotate back to 0
-            rotation = 0;
-        }
-        currentRotation = `rotate(${rotation}deg)`
-        document.querySelector("img").style.transform = currentRotation;
-        // document.querySelector("img").style.transform.replace(ROTATION_REGEX, currentRotation)
-    }
-
-    // button.innerHTML += `<i class="bi bi-arrow-90deg-left"></i>Rotate 90°`
+    button.onclick = rotateImage
     button.innerText += `90°`
     return button
 }
@@ -292,6 +290,13 @@ function lockImage() {
     zoomist.options.pinchable = false
     zoomist.options.wheelable = false
     settings.locked = true
+    settings.image = {}
+
+    let image = document.querySelector("img");
+
+    settings.image.width = image.style.width;
+    settings.image.height = image.style.height;
+
     noSleep.enable();
 
     updateButtonPanel()
@@ -338,6 +343,19 @@ window.addEventListener("orientationchange", () => {
             createVerticalButtonPanel()
         } else {
             createHorizontalButtonPanel()
+        }
+        if (settings.locked) {
+            rotateImage()
+            let image = document.querySelector("img")
+            if (rotation === -90) {
+                image.style.transform += "translate(50px, 50px)";
+            }
+            else if (rotation === -270) {
+                image.style.transform += "translate(-50px, 50px)";
+            }
+            image.style.width = settings.image.width
+            image.style.height = settings.image.height
+
         }
     }
 });
