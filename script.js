@@ -6,6 +6,7 @@ let currentRotation = `rotate(0deg)`;
 let settings = null
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
+const TRANSLATE_REGEX = /translate\((.*?, .*?)\)/gm;
 
 function openFullscreen() {
     // Trigger fullscreen  
@@ -72,24 +73,44 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     wrapper.style.height = "100dvh";
                 },
                 zoom() {
-                    transformImage("zoom")
+                    replaceRotation("zoom")
                 },
                 wheel() {
-                    transformImage("wheel")
+                    replaceRotation("wheel")
                 },
                 drag() {
-                    transformImage("drag")
+                    replaceRotation("drag")
                 },
                 pinch() {
-                    transformImage("pinch")
+                    replaceRotation("pinch")
                 },
+                resize() {
+                    console.log("resize zoomist!!!!!")
+                    if (settings.locked) {
+                        replaceRotation("resize");
+                        let image = document.querySelector("img")
+                        console.log("oirentationchange 0", image.style.width, image.style.height);
+                        image.style.width = settings.image.width
+                        image.style.height = settings.image.height
+                        image.style.transform = image.style.transform.replaceAll(TRANSLATE_REGEX, "");
+                        console.log("oirentationchange", image.style.width, image.style.height);
+                        if (rotation === -90) {
+                            image.style.transform += "translate(12.25%, -10%)";
+                        }
+                        else if (rotation === -270) {
+                            currentRotation = -90
+                            replaceRotation("resize");
+                            image.style.transform += "translate(-12.25%, -10%)";
+                        }
+                    }
+                }
             }
         })
         updateButtonPanel()
     });
 });
 
-function transformImage(debugText) {
+function replaceRotation(debugText) {
     let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
     console.log("zoom", currentRotation, transform)
     document.querySelector("img").style.transform = transform
@@ -211,7 +232,7 @@ function rotateImage() {
     console.log("rotate Image; rotation", rotation)
     if (rotation === -360) {
         rotation = 0;
-    }
+    }    
     currentRotation = `rotate(${rotation}deg)`
     document.querySelector("img").style.transform = currentRotation;
 }
@@ -296,6 +317,7 @@ function lockImage() {
 
     settings.image.width = image.style.width;
     settings.image.height = image.style.height;
+    console.log("lockImage", settings.image.width, settings.image.height);
 
     noSleep.enable();
 
@@ -346,16 +368,6 @@ window.addEventListener("orientationchange", () => {
         }
         if (settings.locked) {
             rotateImage()
-            let image = document.querySelector("img")
-            if (rotation === -90) {
-                image.style.transform += "translate(50px, 50px)";
-            }
-            else if (rotation === -270) {
-                image.style.transform += "translate(-50px, 50px)";
-            }
-            image.style.width = settings.image.width
-            image.style.height = settings.image.height
-
         }
     }
 });
