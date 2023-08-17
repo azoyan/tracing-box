@@ -5,7 +5,7 @@ let imgElement;
 let currentRotation = `rotate(0deg)`;
 let settings = null
 const userAgent = window.navigator.userAgent.toLowerCase();
-let isTooltipShowed = false
+let isTooltipShowed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
@@ -26,7 +26,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
     if (isIos) {
-        document.getElementById("toast-body").innerText = 'Install this application on your home screen for quick, easy and offline access when you’re on the go. Tap the “share” icon, and then tap on “Add to home screen”.'
+        document.getElementById("installToastBody").innerText = 'Install this application on your home screen for quick, easy and offline access when you’re on the go. Tap the “share” icon, and then tap on “Add to home screen”.'
     }
     else {
         // Handle the click event on the "Install" button
