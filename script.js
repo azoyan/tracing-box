@@ -25,8 +25,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
     deferredPrompt = e;
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
-    if (isIos) {
-        document.getElementById("installToastBody").innerText = 'Install this application on your home screen for quick, easy and offline access when you’re on the go. Tap the “share” icon, and then tap on “Add to home screen”.'
+    if (isIos) {        
+        document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong>  “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
     }
     else {
         // Handle the click event on the "Install" button
