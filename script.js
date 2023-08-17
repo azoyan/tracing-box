@@ -9,6 +9,43 @@ let isTooltipShowed = false
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker
+            .register("/tracing-paper/sw.js")
+            .then(res => console.log("service worker registered"))
+            .catch(err => console.log("service worker not registered", err))
+    })
+}
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    let isIos = showIosInstallModal();
+    const toast = new bootstrap.Toast(document.getElementById('installToast'));
+    if (isIos) {
+        document.getElementById("toast-body").innerText = 'Install this application on your home screen for quick, easy and offline access when you’re on the go. Tap the “share” icon, and then tap on “Add to home screen”.'
+    }
+    else {
+        // Handle the click event on the "Install" button
+        document.getElementById('installBtn').addEventListener('click', () => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+                toast.hide();
+            });
+        });
+    }
+    toast.show();
+});
+
 function openFullscreen() {
     // Trigger fullscreen  
     if (html.requestFullscreen) {
