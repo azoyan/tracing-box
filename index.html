@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cotton123236/zoomist@latest/dist/zoomist.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/cotton123236/zoomist@latest/dist/zoomist.min.js"></script>
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <link rel=" stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
@@ -67,10 +68,7 @@
                 <strong class="me-auto text-success"> Recommendation</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body" id="toast-body" style="background: white;">
-                Press <button class="btn btn-outline-secondary btn-sm" onclick="openFullscreen()"><i
-                        class="bi bi-arrows-fullscreen"></i> Fullscreen </button> to hold device orientation
-            </div>
+            <div class="toast-body" id="toast-body" style="background: white;"></div>
         </div>
     </div>
     <div class="container my-4" id="uploadForm">
@@ -129,7 +127,7 @@
                 <strong class="me-auto"> Install Tracing Paper App</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body" id="toast-body" style="background: white;">
+            <div class="toast-body" style="background: white;">
                 Install app for a better experience
                 <button class="btn btn-primary btn-sm" id="installBtn">Install</button>
             </div>

@@ -4,6 +4,8 @@ let html = document.documentElement;
 let imgElement;
 let currentRotation = `rotate(0deg)`;
 let settings = null
+const userAgent = window.navigator.userAgent.toLowerCase();
+let isTooltipShowed = false
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
@@ -291,6 +293,36 @@ function unlockImage() {
     updateButtonPanel()
 }
 
+function isMobile() {
+    let hasTouchScreen = false;
+    if ("maxTouchPoints" in navigator) {
+        hasTouchScreen = navigator.maxTouchPoints > 0;
+    } else if ("msMaxTouchPoints" in navigator) {
+        hasTouchScreen = navigator.msMaxTouchPoints > 0;
+    } else {
+        const mQ = matchMedia?.("(pointer:coarse)");
+        if (mQ?.media === "(pointer:coarse)") {
+            hasTouchScreen = !!mQ.matches;
+        } else if ("orientation" in window) {
+            hasTouchScreen = true; // deprecated, but good fallback
+        } else {
+            // Only as a last resort, fall back to user agent sniffing
+            const UA = userAgent;
+            hasTouchScreen =
+                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+        }
+        return hasTouchScreen
+    }
+}
+
+function showToast(text) {
+    const toast = new bootstrap.Toast(document.getElementById('toastTooltip'));
+    const toastBody = document.getElementById("toast-body");
+    toastBody.innerHTML = text
+    toast.show()
+}
+
 function lockOrientation() {
     let orientation = screen.orientation.type;
     let textContent = "text-content:" + orientation
@@ -302,13 +334,24 @@ function lockOrientation() {
             textContent += `Error: ${error}\n`;
             if (error instanceof DOMException && error.name === "NotSupportedError") {
                 console.error("This feature is not supported on your device.");
+                if (!isTooltipShowed) {
+                    showToast("Lock Orientation in your device to prevent rotation")
+                    isTooltipShowed = true
+                }
             } else if (error instanceof DOMException && error.name === "SecurityError") {
                 // console.error("You do not have permission to perform this action.");
+                let useragent = userAgent.toLowerCase();
+                console.log("useragent:", useragent);
+                let isFirefox = useragent.indexOf("firefox") > -1;
 
-                if (!settings.isFullscreen) {
-                    const toast = new bootstrap.Toast(document.getElementById('toastTooltip'));
-                    toast.show()
-                    console.log("lockImage show", toast)
+                if (!settings.isFullscreen && !isTooltipShowed) {
+                    if (isFirefox ) {
+                        isTooltipShowed = true
+                        showToast("Lock Orientation in your device to prevent rotation")
+                    }
+                    else {
+                        showToast(`<button class="btn btn-outline-secondary btn-sm" onclick="openFullscreen()"><i class="bi bi-arrows-fullscreen"></i> Fullscreen </button> to hold device orientation`)
+                    }
                 }
             } else if (error instanceof TypeError) {
                 console.error("There is a problem with the data type of one of your variables.");
@@ -333,8 +376,7 @@ function lockImage() {
 
 function updateButtonPanel() {
     if (settings) {
-        let isMobile = window.matchMedia("(pointer:coarse)").matches;
-        if (/landscape/.test(screen.orientation.type) && isMobile) {
+        if (/landscape/.test(screen.orientation.type) && isMobile()) {
             createVerticalButtonPanel()
         }
         else {
@@ -346,8 +388,6 @@ function updateButtonPanel() {
 function showIosInstallModal() {
     // detect if the device is on iOS
     const isIos = () => {
-        const userAgent = window.navigator.userAgent.toLowerCase();
-
         return /iphone|ipad|ipod/.test(userAgent);
     };
 
