@@ -30,7 +30,7 @@ window.addEventListener('appinstalled', () => {
     console.log('PWA was installed');
 });
 
-{
+if (!isInStandaloneMode()) {
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
     if (isIos) {
@@ -63,6 +63,7 @@ window.addEventListener('appinstalled', () => {
         toast.show();
     }
 }
+
 
 
 function openFullscreen() {
@@ -441,20 +442,20 @@ function updateButtonPanel() {
         }
     }
 }
+const isIos = () => {
+    return /iPhone|iPad|iPod/.test(userAgent);
+};
+
+// check if the device is in standalone mode
+const isInStandaloneMode = () => {
+    return (
+        "standalone" in window.navigator &&
+        window.navigator.standalone
+    );
+};
 
 function showIosInstallModal() {
     // detect if the device is on iOS
-    const isIos = () => {
-        return /iPhone|iPad|iPod/.test(userAgent);
-    };
-
-    // check if the device is in standalone mode
-    const isInStandaloneMode = () => {
-        return (
-            "standalone" in window.navigator &&
-            window.navigator.standalone
-        );
-    };
     // show the modal only once
     console.log("isIos", isIos(), "isStandalone", isInStandaloneMode());
     const shouldShowModalResponse = isIos() && !isInStandaloneMode();
