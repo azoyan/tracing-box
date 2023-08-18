@@ -18,34 +18,39 @@ if ("serviceWorker" in navigator) {
             .catch(err => console.log("service worker not registered", err))
     })
 }
-
 let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
+{
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
     if (isIos) {
-        document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong>  “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
+        document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong> “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
+    }
+    else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
+        document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
     }
     else {
-        // Handle the click event on the "Install" button
-        document.getElementById('installBtn').addEventListener('click', () => {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                } else {
-                    console.log('User dismissed the install prompt');
-                }
-                deferredPrompt = null;
-                toast.hide();
+        window.addEventListener("beforeinstallprompt", (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            // Handle the click event on the "Install" button
+            document.getElementById('installBtn').addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                    toast.hide();
+                });
             });
-        });
+        })
     }
     toast.show();
-});
+}
+
 
 function openFullscreen() {
     // Trigger fullscreen  
@@ -347,13 +352,12 @@ function isMobile() {
             hasTouchScreen = true; // deprecated, but good fallback
         } else {
             // Only as a last resort, fall back to user agent sniffing
-            const UA = userAgent;
             hasTouchScreen =
                 /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(userAgent) ||
                 /\b(Android|Windows Phone|iPad|iPod)\b/i.test(userAgent);
         }
-        return hasTouchScreen
     }
+    return hasTouchScreen
 }
 
 function showToast(text) {
@@ -382,7 +386,7 @@ function lockOrientation() {
                 // console.error("You do not have permission to perform this action.");
 
                 console.log("useragent:", userAgent);
-                let isFirefox = userAgent.indexOf("firefox") > -1;
+                let isFirefox = userAgent.indexOf("Firefox") > -1;
 
                 if (!settings.isFullscreen && !isTooltipShowed) {
                     if (isFirefox) {
