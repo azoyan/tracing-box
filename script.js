@@ -4,7 +4,8 @@ let html = document.documentElement;
 let imgElement;
 let currentRotation = `rotate(0deg)`;
 let settings = null
-const userAgent = window.navigator.userAgent.toLowerCase();
+const userAgent = window.navigator.userAgent
+console.log(userAgent)
 let isTooltipShowed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
@@ -25,7 +26,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     deferredPrompt = e;
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
-    if (isIos) {        
+    if (isIos) {
         document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong>  “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
     }
     else {
@@ -166,11 +167,13 @@ function createHorizontalButtonPanel() {
         panel.appendChild(lockButtonColumn)
         lockButtonColumn.appendChild(createUnlockButton("Unlock"))
     }
-
-    let fullscreenButtonColumn = document.createElement('div')
-    fullscreenButtonColumn.classList.add("col", "col-auto")
-    fullscreenButtonColumn.appendChild(createFullscreenButton())
-    panel.appendChild(fullscreenButtonColumn)
+    if (!/iPhone/.test(userAgent)) {
+        let fullscreenButtonColumn = document.createElement('div')
+        fullscreenButtonColumn.classList.add("col", "col-auto")
+        fullscreenButtonColumn.appendChild(createFullscreenButton())
+        panel.appendChild(fullscreenButtonColumn)
+    }
+    console.log(userAgent)
 
     navigator.appendChild(panel)
     mainNav.appendChild(navigator)
@@ -346,8 +349,8 @@ function isMobile() {
             // Only as a last resort, fall back to user agent sniffing
             const UA = userAgent;
             hasTouchScreen =
-                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(userAgent) ||
+                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(userAgent);
         }
         return hasTouchScreen
     }
@@ -377,12 +380,12 @@ function lockOrientation() {
                 }
             } else if (error instanceof DOMException && error.name === "SecurityError") {
                 // console.error("You do not have permission to perform this action.");
-                let useragent = userAgent.toLowerCase();
-                console.log("useragent:", useragent);
-                let isFirefox = useragent.indexOf("firefox") > -1;
+
+                console.log("useragent:", userAgent);
+                let isFirefox = userAgent.indexOf("firefox") > -1;
 
                 if (!settings.isFullscreen && !isTooltipShowed) {
-                    if (isFirefox ) {
+                    if (isFirefox) {
                         isTooltipShowed = true
                         showToast("Lock Orientation in your device to prevent rotation")
                     }
@@ -425,7 +428,7 @@ function updateButtonPanel() {
 function showIosInstallModal() {
     // detect if the device is on iOS
     const isIos = () => {
-        return /iphone|ipad|ipod/.test(userAgent);
+        return /iPhone|iPad|iPod/.test(userAgent);
     };
 
     // check if the device is in standalone mode
@@ -444,7 +447,6 @@ function showIosInstallModal() {
 window.addEventListener("orientationchange", () => {
     console.log(`The orientation of the screen is: ${screen.orientation.type}`);
     if (settings !== null) {
-
         if (/landscape/.test(screen.orientation.type)) {
             createVerticalButtonPanel()
         } else {
