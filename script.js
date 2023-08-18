@@ -7,6 +7,8 @@ let settings = null
 const userAgent = window.navigator.userAgent
 console.log(userAgent)
 let isTooltipShowed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
+let deferredPrompt;
+let alreadyInstalled = false
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
@@ -18,7 +20,16 @@ if ("serviceWorker" in navigator) {
             .catch(err => console.log("service worker not registered", err))
     })
 }
-let deferredPrompt;
+window.addEventListener('appinstalled', () => {
+    // Hide the app-provided install promotion
+
+    // Clear the deferredPrompt so it can be garbage collected
+    deferredPrompt = null;
+    // Optionally, send analytics event to indicate successful install
+    alreadyInstalled = true
+    console.log('PWA was installed');
+});
+
 {
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
@@ -48,7 +59,9 @@ let deferredPrompt;
             });
         })
     }
-    toast.show();
+    if (!alreadyInstalled) {
+        toast.show();
+    }
 }
 
 
