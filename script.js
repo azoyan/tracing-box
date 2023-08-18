@@ -68,29 +68,27 @@ if (getPWADisplayMode() === "browser") {
     }
     else {
         window.addEventListener("beforeinstallprompt", (e) => {
-            e.prompt()
-        //     e.preventDefault();
-        //     deferredPrompt = e;
+            e.preventDefault();
+            deferredPrompt = e;
 
-        //     // Handle the click event on the "Install" button
-        //     document.getElementById('installBtn').addEventListener('click', () => {
-        //         deferredPrompt.prompt();
-        //         deferredPrompt.userChoice.then((choiceResult) => {
-        //             if (choiceResult.outcome === 'accepted') {
-        //                 console.log('User accepted the install prompt');
-        //             } else {
-        //                 console.log('User dismissed the install prompt');
-        //             }
-        //             deferredPrompt = null;
-        //             toast.hide();
-        //         });
-        //     });
-        //     toast.show();
-        }
-        )
+            // Handle the click event on the "Install" button
+            document.getElementById('installBtn').addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                    toast.hide();
+                });
+            });
+            toast.show();
+        })
     }
     if (!alreadyInstalled) {
-        // toast.show();
+        toast.show();
     }
 }
 
