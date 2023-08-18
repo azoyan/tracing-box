@@ -18,8 +18,22 @@ if ("serviceWorker" in navigator) {
             .register("/tracing-paper/sw.js")
             .then(res => console.log("service worker registered"))
             .catch(err => console.log("service worker not registered", err))
-    })
+
+        if ('getInstalledRelatedApps' in navigator) {
+            navigator.getInstalledRelatedApps().then((apps) => {
+                console.table(apps);
+                // Search for a specific installed platform-specific app
+                const psApp = apps.find((app) => app.id === "/tracing-paper");
+                if (apps.length > 0) { alert("Open installed app"); }
+                if (psApp) {
+                    alert("Open installed app");
+                }
+            }).catch((error) => console.log(error));
+        }
+    }
+    )
 }
+
 window.addEventListener('appinstalled', () => {
     // Hide the app-provided install promotion
 
@@ -35,7 +49,7 @@ if (navigator.getInstalledRelatedApps) {
         console.table(apps);
         // Search for a specific installed platform-specific app
         const psApp = apps.find((app) => app.id === "/tracing-paper");
-
+        if (apps.length > 0) { alert("Open installed app"); }
         if (psApp) {
             alert("Open installed app");
         }
