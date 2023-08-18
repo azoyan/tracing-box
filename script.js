@@ -30,7 +30,7 @@ window.addEventListener('appinstalled', () => {
     console.log('PWA was installed');
 });
 
-if (!isInStandaloneMode()) {
+if (getPWADisplayMode() === "browser") {
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
     if (isIos) {
@@ -38,6 +38,7 @@ if (!isInStandaloneMode()) {
     }
     else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
         document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
+        window.addEventListener("beforeinstallprompt", (e) => e.prompt());
     }
     else {
         window.addEventListener("beforeinstallprompt", (e) => {
@@ -442,17 +443,24 @@ function updateButtonPanel() {
         }
     }
 }
-const isIos = () => {
+function isIos() {
     return /iPhone|iPad|iPod/.test(userAgent);
-};
+}
 
-// check if the device is in standalone mode
-const isInStandaloneMode = () => {
-    return (
-        "standalone" in window.navigator &&
-        window.navigator.standalone
-    );
-};
+
+function getPWADisplayMode() {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (document.referrer.startsWith('android-app://')) {
+        return 'twa';
+    } else if (navigator.standalone || isStandalone) {
+        return 'standalone';
+    }
+    return 'browser';
+}
+
+function isInStandaloneMode() {
+    return "standalone" === getPWADisplayMode()
+}
 
 function showIosInstallModal() {
     // detect if the device is on iOS
