@@ -30,6 +30,18 @@ window.addEventListener('appinstalled', () => {
     console.log('PWA was installed');
 });
 
+if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then((apps) => {
+        console.table(apps);
+        // Search for a specific installed platform-specific app
+        const psApp = apps.find((app) => app.id === "/tracing-paper");
+
+        if (psApp) {
+            alert("Open installed app");
+        }
+    }).catch((error) => console.log(error));
+}
+
 if (getPWADisplayMode() === "browser") {
     let isIos = showIosInstallModal();
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
@@ -58,6 +70,7 @@ if (getPWADisplayMode() === "browser") {
                     toast.hide();
                 });
             });
+            toast.show();
         })
     }
     if (!alreadyInstalled) {

@@ -12,6 +12,11 @@
             "src": "/tracing-paper/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "/tracing-paper/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
         }
     ],
     "theme_color": "#ffffff",
@@ -20,5 +25,12 @@
     "scope": "/tracing-paper",
     "start_url": "/tracing-paper",
     "id": "/tracing-paper",
-    "orientation":  "portrait"
+    "orientation": "portrait",
+    "prefer_related_applications": true,
+    "related_applications": [
+        {
+            "platform": "webapp",
+            "url": "https://azoyan.github.io/tracing-paper/manifest.json"
+        }
+    ]
 }
