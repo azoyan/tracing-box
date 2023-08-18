@@ -64,7 +64,7 @@ if (getPWADisplayMode() === "browser") {
     }
     else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
         document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
-        window.addEventListener("beforeinstallprompt", (e) => e.prompt());
+        // window.addEventListener("beforeinstallprompt", (e) => e.prompt());
     }
     else {
         window.addEventListener("beforeinstallprompt", (e) => {
