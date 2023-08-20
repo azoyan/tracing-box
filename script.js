@@ -18,18 +18,6 @@ if ("serviceWorker" in navigator) {
             .register("/tracing-paper/sw.js")
             .then(res => console.log("service worker registered"))
             .catch(err => console.log("service worker not registered", err))
-
-        if ('getInstalledRelatedApps' in navigator) {
-            navigator.getInstalledRelatedApps().then((apps) => {
-                console.table(apps);
-                // Search for a specific installed platform-specific app
-                const psApp = apps.find((app) => app.id === "/tracing-paper");
-                if (apps.length > 0) { alert("Open installed app"); }
-                if (psApp) {
-                    alert("Open installed app");
-                }
-            }).catch((error) => console.log(error));
-        }
     }
     )
 }
@@ -44,16 +32,21 @@ window.addEventListener('appinstalled', () => {
     console.log('PWA was installed');
 });
 
-if (navigator.getInstalledRelatedApps) {
-    navigator.getInstalledRelatedApps().then((apps) => {
-        console.table(apps);
-        // Search for a specific installed platform-specific app
+function openNativeApp(apps)  {
+    
         const psApp = apps.find((app) => app.id === "/tracing-paper");
-        if (apps.length > 0) { alert("Open installed app"); }
-        if (psApp) {
-            alert("Open installed app");
+        if (psApp) {                
+            const toast = new bootstrap.Toast(document.getElementById('installToast'));
+            const toastBody = document.getElementById("installToastBody")           
+            toastBody.innerHTML = `Application already installed `
+            toastBody.innerHTML += `<a class="btn btn-primary btn-sm" href='https://azoyan.github.io/tracing-paper' target='_blank'>Open</a>`
+            toast.show();
         }
-    }).catch((error) => console.log(error));
+    
+}
+
+if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then((apps) => {if(apps.length > 0) openNativeApp(apps)}).catch((error) => console.log(error));
 }
 
 if (getPWADisplayMode() === "browser") {
@@ -64,31 +57,50 @@ if (getPWADisplayMode() === "browser") {
     }
     else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
         document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
-        // window.addEventListener("beforeinstallprompt", (e) => e.prompt());
     }
     else {
         window.addEventListener("beforeinstallprompt", (e) => {
             e.preventDefault();
             deferredPrompt = e;
 
-            // Handle the click event on the "Install" button
-            document.getElementById('installBtn').addEventListener('click', () => {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
-                    } else {
-                        console.log('User dismissed the install prompt');
+            if (navigator.getInstalledRelatedApps) {
+                navigator.getInstalledRelatedApps().then((apps) => {
+                    if (apps.length > 0) {
+                        openNativeApp(apps)
                     }
-                    deferredPrompt = null;
-                    toast.hide();
+                    else {
+                        document.getElementById('installBtn').addEventListener('click', () => {
+                            deferredPrompt.prompt();
+                            deferredPrompt.userChoice.then((choiceResult) => {
+                                if (choiceResult.outcome === 'accepted') {
+                                    console.log('User accepted the install prompt');
+                                } else {
+                                    console.log('User dismissed the install prompt');
+                                }
+                                deferredPrompt = null;
+                                toast.hide();
+                            });
+                        });
+                        toast.show();
+                    }
+                }).catch((error) => console.log(error));
+            }
+            else {
+                document.getElementById('installBtn').addEventListener('click', () => {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                        } else {
+                            console.log('User dismissed the install prompt');
+                        }
+                        deferredPrompt = null;
+                        toast.hide();
+                    });
                 });
-            });
-            toast.show();
+                toast.show();
+            }
         })
-    }
-    if (!alreadyInstalled) {
-        toast.show();
     }
 }
 

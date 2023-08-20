@@ -30,7 +30,8 @@
     "related_applications": [
         {
             "platform": "webapp",
-            "url": "https://azoyan.github.io/tracing-paper/manifest.json"
+            "url": "https://azoyan.github.io/tracing-paper/manifest.json",
+            "id": "/tracing-paper"
         }
     ]
 }
