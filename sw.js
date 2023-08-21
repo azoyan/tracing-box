@@ -8,6 +8,25 @@ self.addEventListener('install', e => {
       // but you can add more such as style.css as your app grows
       return cache.addAll([
         '/',
+        './.well-known/',
+        './.well-known/assetlinks.json',
+        './android-chrome-192x192.png',
+        './apple-touch-icon.png',
+        './browserconfig.xml',
+        './favicon-16x16.png',
+        './favicon-32x32.png',
+        './favicon.ico',
+        './mstile-70x70.png',
+        './mstile-144x144.png',
+        './mstile-150x150.png',
+        './mstile-310x150.png',
+        './mstile-310x310.png',
+        './pencil-square.svg',
+        './safari-pinned-tab.svg',
+        './video-new.webm',
+        './video-new.mp4',
+        './sw.js',
+        './script.js',
         './index.html',
         './manifest.json'
       ]);
