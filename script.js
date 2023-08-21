@@ -57,7 +57,7 @@ if (getPWADisplayMode() === "browser") {
             toast.show()
         }
         else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
-            document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
+            document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Go to menu <i class="bi bi-three-dots-vertical bg-body-secondary"></i> and press the <strong> “Install" </strong> button.`
             toast.show()
         }
         else {
