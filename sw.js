@@ -21,8 +21,6 @@ self.addEventListener('install', e => {
         './mstile-310x310.png',
         './pencil-square.svg',
         './safari-pinned-tab.svg',
-        './video-new.webm',
-        './video-new.mp4',
         './script.js',
         './index.html',
         './manifest.json'
