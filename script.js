@@ -33,8 +33,10 @@ function openNativeApp(apps)  {
         if (psApp) {                
             const toast = new bootstrap.Toast(document.getElementById('installToast'));
             const toastBody = document.getElementById("installToastBody")           
-            toastBody.innerHTML = `<div class="row align-items-center"><div class="col">Application already installed</div>`
-            toastBody.innerHTML += `<div class="col col-auto"><a class="btn btn-primary btn-sm" href='https://azoyan.github.io/tracing-paper' target='_blank'>Open</a></div></div>`
+            toastBody.innerHTML = `<div class="row align-items-center">
+                <div class="col">Application already installed</div>
+                <div class="col col-auto"><a class="btn btn-primary btn-sm" href='https://azoyan.github.io/tracing-paper' target='_blank'>Open</a></div>
+            </div>`
             toast.show();
         }
     
