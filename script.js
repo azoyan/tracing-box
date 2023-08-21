@@ -23,17 +23,12 @@ if ("serviceWorker" in navigator) {
 }
 
 window.addEventListener('appinstalled', () => {
-    // Hide the app-provided install promotion
-
-    // Clear the deferredPrompt so it can be garbage collected
     deferredPrompt = null;
-    // Optionally, send analytics event to indicate successful install
     alreadyInstalled = true
     console.log('PWA was installed');
 });
 
 function openNativeApp(apps)  {
-    
         const psApp = apps.find((app) => app.id === "/tracing-paper");
         if (psApp) {                
             const toast = new bootstrap.Toast(document.getElementById('installToast'));
