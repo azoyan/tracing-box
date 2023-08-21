@@ -26,65 +26,44 @@ window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     alreadyInstalled = true
     console.log('PWA was installed');
-});
+})
 
-function openNativeApp(apps)  {
-        const psApp = apps.find((app) => app.id === "/tracing-paper");
-        if (psApp) {                
-            const toast = new bootstrap.Toast(document.getElementById('installToast'));
-            const toastBody = document.getElementById("installToastBody")           
-            toastBody.innerHTML = `<div class="row align-items-center">
+function openNativeApp(apps) {
+    const psApp = apps.find((app) => app.id === "/tracing-paper");
+    if (psApp) {
+        const toast = new bootstrap.Toast(document.getElementById('installToast'));
+        const toastBody = document.getElementById("installToastBody")
+        toastBody.innerHTML = `<div class="row align-items-center">
                 <div class="col">Application already installed</div>
                 <div class="col col-auto"><a class="btn btn-primary btn-sm" href='https://azoyan.github.io/tracing-paper' target='_blank'>Open</a></div>
             </div>`
-            toast.show();
-        }
-    
-}
-
-if (navigator.getInstalledRelatedApps) {
-    navigator.getInstalledRelatedApps().then((apps) => { if(apps.length > 0) openNativeApp(apps) }).catch((error) => console.log(error));
+        toast.show();
+    }
 }
 
 if (getPWADisplayMode() === "browser") {
-    let isIos = showIosInstallModal();
-    const toast = new bootstrap.Toast(document.getElementById('installToast'));
-    if (isIos) {
-        document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong> “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
-        toast.show()
-    }
-    else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
-        document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
-        toast.show()
-    }
-    else {
-        window.addEventListener("beforeinstallprompt", (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (navigator.getInstalledRelatedApps) {
-                navigator.getInstalledRelatedApps().then((apps) => {
-                    if (apps.length > 0) {
-                        openNativeApp(apps)
-                    }
-                    else {
-                        document.getElementById('installBtn').addEventListener('click', () => {
-                            deferredPrompt.prompt();
-                            deferredPrompt.userChoice.then((choiceResult) => {
-                                if (choiceResult.outcome === 'accepted') {
-                                    console.log('User accepted the install prompt');
-                                } else {
-                                    console.log('User dismissed the install prompt');
-                                }
-                                deferredPrompt = null;
-                                toast.hide();
-                            });
-                        });
-                        toast.show();
-                    }
-                }).catch((error) => console.log(error));
+    if (navigator.getInstalledRelatedApps) {
+        navigator.getInstalledRelatedApps().then((apps) => {
+            alreadyInstalled = apps.length > 0
+            if (alreadyInstalled) {
+                openNativeApp(apps)
             }
-            else {
+        }).catch((error) => console.log(error));
+    }
+    if (!alreadyInstalled) {
+        const toast = new bootstrap.Toast(document.getElementById('installToast'));
+        if (isIos()) {
+            document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong> “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
+            toast.show()
+        }
+        else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
+            document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
+            toast.show()
+        }
+        else {
+            window.addEventListener("beforeinstallprompt", (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
                 document.getElementById('installBtn').addEventListener('click', () => {
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
@@ -98,8 +77,8 @@ if (getPWADisplayMode() === "browser") {
                     });
                 });
                 toast.show();
-            }
-        })
+            })
+        }
     }
 }
 
@@ -498,14 +477,6 @@ function getPWADisplayMode() {
 
 function isInStandaloneMode() {
     return "standalone" === getPWADisplayMode()
-}
-
-function showIosInstallModal() {
-    // detect if the device is on iOS
-    // show the modal only once
-    console.log("isIos", isIos(), "isStandalone", isInStandaloneMode());
-    const shouldShowModalResponse = isIos() && !isInStandaloneMode();
-    return shouldShowModalResponse;
 }
 
 window.addEventListener("orientationchange", () => {
