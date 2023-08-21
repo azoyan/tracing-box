@@ -46,7 +46,7 @@ function openNativeApp(apps)  {
 }
 
 if (navigator.getInstalledRelatedApps) {
-    navigator.getInstalledRelatedApps().then((apps) => {if(apps.length > 0) openNativeApp(apps)}).catch((error) => console.log(error));
+    navigator.getInstalledRelatedApps().then((apps) => { if(apps.length > 0) openNativeApp(apps) }).catch((error) => console.log(error));
 }
 
 if (getPWADisplayMode() === "browser") {
@@ -54,9 +54,11 @@ if (getPWADisplayMode() === "browser") {
     const toast = new bootstrap.Toast(document.getElementById('installToast'));
     if (isIos) {
         document.getElementById("installToastBody").innerHTML = `Install this application on your home screen for better experience and offline access. Press the <strong> “Share” </strong><i class="bi bi-box-arrow-up text-primary"> </i> button and then <strong> “Add to Home Screen” </strong><i class="bi bi-plus-square"></i>`
+        toast.show()
     }
     else if (userAgent.indexOf("Firefox") > -1 && isMobile()) {
         document.getElementById("installToastBody").innerHTML = `Install this app on your home screen for better experience and offline access. Press the <strong> “Install Application" </strong> button`
+        toast.show()
     }
     else {
         window.addEventListener("beforeinstallprompt", (e) => {
