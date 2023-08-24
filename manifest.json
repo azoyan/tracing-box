@@ -36,5 +36,15 @@
             "url": "https://azoyan.github.io/tracing-paper/manifest.json",
             "id": "/tracing-paper"
         }
-    ]
+    ],
+    "categories": [
+        "photo",
+        "productivity",
+        "utilities",
+        "artist",
+        "draw",
+        "plot",
+        "design",
+        "hobby"
+      ]
 }
