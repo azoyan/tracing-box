@@ -22,8 +22,6 @@ self.addEventListener('install', e => {
         './pencil-square.svg',
         './safari-pinned-tab.svg',
         './script.js',
-        './.well-known/',
-        './.well-known/assetlinks.json',
         './index.html',
         './manifest.json'
       ]);
