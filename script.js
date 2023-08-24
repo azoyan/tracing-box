@@ -12,16 +12,6 @@ let alreadyInstalled = false
 
 const ROTATION_REGEX = /rotate\((.*?)\)/gm;
 
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-        navigator.serviceWorker
-            .register("/tracing-paper/sw.js")
-            .then(res => console.log("service worker registered"))
-            .catch(err => console.log("service worker not registered", err))
-    }
-    )
-}
-
 window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     alreadyInstalled = true
