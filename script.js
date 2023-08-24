@@ -426,7 +426,14 @@ function lockOrientation() {
                         showToast("Lock Orientation in your device to prevent rotation")
                     }
                     else {
-                        showToast(`<button class="btn btn-outline-secondary btn-sm" onclick="openFullscreen()"><i class="bi bi-arrows-fullscreen"></i> Fullscreen </button> to hold device orientation`)
+                        const html = `<div class="row align-items-center">
+                            <div class="col">Press <strong>Fullscreen</strong> to hold device orientation</div>
+                            <div class="col col-auto">
+                                <button class="btn btn-outline-secondary btn-sm bi bi-arrows-fullscreen" onclick="openFullscreen()">
+                                </button>
+                            </div>
+                        </div>`
+                        showToast(html)
                     }
                 }
             } else if (error instanceof TypeError) {
