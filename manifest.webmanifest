@@ -1,7 +1,7 @@
 {
   "name": "Tracing Box App",
-  "short_name": "TracingPaper",
-  "description": "Transform your device into a lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen",
+  "short_name": "Tracing Box",
+  "description": "Transform your device into a tracing lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen",
   "icons": [
     {
       "src": "icons/manifest-icon-192.maskable.png",
