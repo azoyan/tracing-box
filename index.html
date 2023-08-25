@@ -45,6 +45,7 @@
     <link rel=" stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.12.0/NoSleep.min.js"></script>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
         <div class="container-fluid" id="nav">
@@ -158,11 +159,11 @@
             </p>
         </footer>
     </div>
-    <script>navigator.serviceWorker.register('/tracing-paper/sw.js', { scope: '/tracing-paper/' })</script>
+    <script>navigator.serviceWorker.register('/tracing-paper/service-worker.js', { scope: '/tracing-paper/' })</script>
     <script>
         if ('serviceWorker' in navigator && location.protocol !== 'file:') {
             window.addEventListener('load', function () {
-                navigator.serviceWorker.register('/tracing-paper/sw.js', { scope: '/tracing-paper/' })
+                navigator.serviceWorker.register('/tracing-paper/service-worker.js', { scope: '/tracing-paper/' })
                     .then(function (reg) {
                         reg.onupdatefound = function () {
                             var installingWorker = reg.installing;
@@ -178,4 +179,5 @@
         }</script>
 </body>
 <script src='script.js'></script>
+
 </html>
