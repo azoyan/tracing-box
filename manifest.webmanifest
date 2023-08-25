@@ -48,6 +48,7 @@
       "id": "/tracing-paper"
     }
   ],
+  "file_handlers": [],
   "dir": "ltr",
   "launch_handler": {
     "client_mode": "auto"
@@ -63,6 +64,15 @@
     "hobby"
   ],
   "lang": "en",
+  "scope_extensions": [],
+  "share_target": {},
+  "protocol_handlers": [],
+  "shortcuts": [],
+  "widgets": [],
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "handle_links": "auto",
   "screenshots": [
     {
       "src": "screenshots/start.jpg",
