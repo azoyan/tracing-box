@@ -18,15 +18,14 @@
         {
             "src": "/tracing-paper/apple-touch-icon.png",
             "sizes": "180x180",
-            "type": "image/png",
-            "purpose": "monochrome"
+            "type": "image/png"
         }
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
-    "scope": "/tracing-paper",
-    "start_url": "/tracing-paper",
+    "scope": "/tracing-paper/",
+    "start_url": "/tracing-paper/",
     "id": "/tracing-paper",
     "orientation": "portrait",
     "prefer_related_applications": true,
