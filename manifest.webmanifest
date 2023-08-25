@@ -1,6 +1,6 @@
 {
     "name": "Tracing Paper App",
-    "short_name": "Tracing Paper",
+    "short_name": "TracingPaper",
     "description": "Transform your device into a lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen",
     "icons": [
         {
@@ -29,25 +29,6 @@
     "id": "/tracing-paper",
     "orientation": "portrait",
     "prefer_related_applications": true,
-    "related_applications": [
-        {
-            "platform": "webapp",
-            "url": "https://azoyan.github.io/tracing-paper/manifest.json",
-            "id": "/tracing-paper"
-        }
-    ],
-    "handle_links": "auto",
-    "display_override": [
-        "window-controls-overlay",
-        "standalone",
-        "browser"
-    ],
-    "edge_side_panel": {
-        "preferred_width": 480
-    },
-    "launch_handler": {
-        "client_mode": "auto"
-    },
     "dir": "ltr",
     "categories": [
         "photo",

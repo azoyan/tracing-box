@@ -5,7 +5,7 @@
         ],
         "target": {
             "namespace": "web",
-            "site": "https://azoyan.github.io/tracing-paper/manifest.json"
+            "site": "https://azoyan.github.io/tracing-paper/manifest.webmanifest"
         }
     }
 ]
