@@ -31,6 +31,11 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "fullscreen",
+    "window-controls-overlay"
+  ],
   "scope": "/tracing-paper/",
   "start_url": "/tracing-paper/",
   "id": "/tracing-paper",
