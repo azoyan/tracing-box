@@ -36,6 +36,13 @@
   "id": "/tracing-paper",
   "orientation": "portrait",
   "prefer_related_applications": true,
+  "related_applications": [
+    {
+        "platform": "webapp",
+        "url": "https://azoyan.github.io/tracing-paper/manifest.json",
+        "id": "/tracing-paper"
+    }
+],
   "dir": "ltr",
   "launch_handler": {
     "client_mode": "auto"
