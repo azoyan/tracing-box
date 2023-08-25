@@ -1,7 +1,7 @@
 {
     "name": "Tracing Paper App",
     "short_name": "Tracing Paper",
-    "description": "This intuitive application transforms your smartphone or tablet into a modern-day lightbox, allowing for effortless tracing directly from your device. Simply load your desired image onto the app, adjust its brightness to your preference, and then place a piece of paper atop the screen. Voilà, you can now trace your favorite images with precision and ease. Whether you're an aspiring artist, a craft enthusiast, or just looking for some fun, our Tracing Paper App will light up your creativity!",
+    "description": "Transform your device into a lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen",
     "icons": [
         {
             "src": "/tracing-paper/android-chrome-192x192.png",
