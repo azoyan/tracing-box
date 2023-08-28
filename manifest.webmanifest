@@ -66,7 +66,7 @@
   ],
   "icons": [
     {
-      "src": "android/android-launchericon-512-512.png",
+      "src": "icons/512.png",
       "sizes": "512x512",
       "purpose": "any"
     },
