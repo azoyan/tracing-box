@@ -4,19 +4,19 @@
   "description": "Transform your device into a tracing lightbox, allowing for tracing image directly from your device. Load image and place a paper atop the screen",
   "icons": [
     {
-      "src": "icons/icon180x180.png",
+      "src": "icons/180.png",
       "sizes": "180x180",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "maskable"
     },
     {
-      "src": "icons/icon192x192.png",
+      "src": "icons/192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icons/icon512x512.png",
+      "src": "icons/lamp-new512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
