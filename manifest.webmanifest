@@ -69,14 +69,14 @@
   "handle_links": "auto",
   "screenshots": [
     {
-      "src": "screenshots/start.jpg",
-      "type": "image/jpg",
-      "sizes": "576x1280"
+      "src": "screenshots/01.png",
+      "type": "image/png",
+      "sizes": "576x1235"
     },
     {
-      "src": "screenshots/locked.jpg",
-      "type": "image/jpg",
-      "sizes": "1081x2085"
+      "src": "screenshots/02.png",
+      "type": "image/png",
+      "sizes": "576x1235"
     }
   ]
 }
