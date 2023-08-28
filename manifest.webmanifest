@@ -323,7 +323,8 @@
     },
     {
       "src": "windows11/Square44x44Logo.altform-unplated_targetsize-256.png",
-      "sizes": "256x256"
+      "sizes": "256x256",
+      "purpose": "any"
     },
     {
       "src": "windows11/Square44x44Logo.altform-lightunplated_targetsize-16.png",
@@ -387,8 +388,7 @@
     },
     {
       "src": "android/android-launchericon-512-512.png",
-      "sizes": "512x512",
-      "purpose": "any"
+      "sizes": "512x512"
     },
     {
       "src": "android/android-launchericon-192-192.png",
