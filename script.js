@@ -72,8 +72,6 @@ if (getPWADisplayMode() === "browser") {
     }
 }
 
-
-
 function openFullscreen() {
     // Trigger fullscreen  
     if (html.requestFullscreen) {
@@ -118,7 +116,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const file = event.target.files[0];
         const imageUrl = URL.createObjectURL(file);
 
-        imgElement = document.createElement('img');
+        imgElement = document.getElementById("zoomist");
         imgElement.src = imageUrl;
 
         settings = { orientation: screen.orientation.type, locked: false, isFullscreen: false }
@@ -128,17 +126,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.body.style.overflow = "hidden"
         document.body.style.touchAction = "pan-y, pan-x"
         // let el = document.getElementById("#zoomist");
-        zoomist = new Zoomist('#zoomist', {
-            maxRatio: 15,
-            src: imgElement,
+        zoomist = new Zoomist('.zoomist-container', {
+            maxScale: 15,
+            minScale: 0.1,
+            initScale: 1,
+            // src: imgElement,
             fill: 'contain',
             maxRatio: 8,
             wheelable: true,
+            draggable: true,
+            pinchable: true,
+            bounds: true,
+            zoomRatio: 0.1,
             on: {
                 ready() {
                     console.log("ready")
                     document.querySelector("img").style.transform += currentRotation
-                    let wrapper = document.getElementsByClassName("zoomist-wrapper")[0]
+                    let wrapper = document.getElementsByClassName("zoomist-container")[0]
                     wrapper.style.height = "100dvh";
                 },
                 zoom() {
@@ -163,7 +167,7 @@ function transformImage(debugText) {
     let transform = document.querySelector("img").style.transform.replaceAll(ROTATION_REGEX, "") + currentRotation;
     console.log("zoom", currentRotation, transform)
     document.querySelector("img").style.transform = transform
-    let wrapper = document.getElementsByClassName("zoomist-wrapper")[0]
+    let wrapper = document.getElementsByClassName("zoomist-container")[0]
     wrapper.style.height = "100dvh";
 }
 
@@ -290,7 +294,7 @@ function createRotateButton() {
             rotation = 0;
         }
         currentRotation = `rotate(${rotation}deg)`
-        document.querySelector("img").style.transform = currentRotation;
+        document.getElementById("zoomist").style.transform = currentRotation;
         // document.querySelector("img").style.transform.replace(ROTATION_REGEX, currentRotation)
     }
 
