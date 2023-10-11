@@ -68,7 +68,7 @@
             </ul>
         </div>
     </nav>
-    <div class="p-3 position-fixed bottom-0 start-50 translate-middle-x" style="z-index: 9999;">
+    <div class="p-3 position-fixed bottom-0 start-50 translate-middle-x">
         <div class="toast" id="toastTooltip" role="alert" aria-live="assertive" aria-atomic="true"
             data-bs-autohide="true">
             <div class="toast-header">
@@ -126,10 +126,10 @@
     </div>
 
     <!-- <div id="zoomist"></div> -->
-    <div id="zoomist-container" class="zoomist-container">
-        <div id="zoomist-wrapper" class="zoomist-wrapper">
-            <div id="zoomist-image" class="zoomist-image">
-                <img id="zoomist" />
+    <div id="zoomist-container" class="zoomist-container" hidden>
+        <div id="zoomist-wrapper" class="zoomist-wrapper" >
+            <div id="zoomist-image" class="zoomist-image" style="aspect-ratio: 1;">
+                <img id="zoomist" style="object-fit: cover; object-position: center;"/>
             </div>
         </div>
     </div>
@@ -154,9 +154,9 @@
             </div>
         </div>
     </div>
-    <div class="bg-light" style="height: 185px;">
-        <footer style="/*! display: ; */position: unset;" class="pt-4 my-4 ">
-            <ul class="nav justify-content-center pt-3 mb-3">
+    <div class="bg-light py-3">
+        <footer style="/*! display: ; */position: unset;" class="pt-4">
+            <ul class="nav justify-content-center pt-3">
                 <li class="nav-item"><a class="nav-link px-2 text-body-secondary">tracingbox</a></li>
                 <li class="nav-item"><a class="nav-link px-2 text-body-secondary">lightbox</a></li>
                 <li class="nav-item">

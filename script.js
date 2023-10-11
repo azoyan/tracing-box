@@ -118,7 +118,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         imgElement = document.getElementById("zoomist");
         imgElement.src = imageUrl;
-
+        document.getElementById("zoomist-container").removeAttribute("hidden")
         settings = { orientation: screen.orientation.type, locked: false, isFullscreen: false }
 
         document.getElementById("uploadForm").remove();
@@ -136,7 +136,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             wheelable: true,
             draggable: true,
             pinchable: true,
-            bounds: true,
+            bounds: false,
             zoomRatio: 0.1,
             on: {
                 ready() {
@@ -157,6 +157,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 pinch() {
                     transformImage("pinch")
                 },
+                resize(zoomist) {
+                    console.log("resize", zoomist)
+                },
+                update(zoomist) {
+                    console.log("update", zoomist)
+                }
             }
         })
         updateButtonPanel()
@@ -221,6 +227,7 @@ function createVerticalButtonPanel() {
     mainNav.style.height = "100%"
     mainNav.style.position = "fixed"
     mainNav.style.flexDirection = "column"
+    mainNav.style.zIndex = 9999
     mainNav.classList.remove("navbar-expand-lg")
     const navigator = document.getElementById("nav");
     while (navigator.firstChild) { navigator.firstChild.remove() }
@@ -489,6 +496,7 @@ window.addEventListener("orientationchange", () => {
             createHorizontalButtonPanel()
         }
     }
+    updateButtonPanel()
 });
 
 
